@@ -1,10 +1,727 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}Home{% endblock %}</title>
+
+    <!--- bootstrap cdn css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--- end of bootstrap cdn css -->
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
+    <!--- about page linking style -->
+    <link href="{% static 'css/about.css' %}" rel="stylesheet">
+    <!--- end of about page linking style -->
+
+    <!--- shop page linking to style -->
+    {% if title == 'Shop' %}
+        <link href="{% static 'css/product_cart.css' %}" rel="stylesheet">
+    {% endif %}
+    <!--- end of shop page linking to style -->
+
+    <!--- link to cart style -->
+    {% if title == 'Cart' %}
+        <link href="{% static 'css/cart.css' %}" rel="stylesheet">
+    {% endif %}
+    <!--- end of link to cart style -->
+
+    <!--- product detail style -->
+    {% if title == 'ProductDetails' %}
+        <style>
+            body {
+                background-color: #f8f9fa;
+            }
+            .product-img {
+                width: 100%;
+                height: 400px;
+                object-fit: cover;
+            }
+            .star-rating i {
+                color: #ffc107;
+            }
+            .quantity-input {
+                width: 70px;
+            }
+            @media (max-width: 768px) {
+                .product-img {
+                    height: 300px;
+                }
+            }
+            .price {
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+            .discount-price {
+                text-decoration: line-through;
+                color: gray;
+                margin-right: 10px;
+            }
+        </style>
+    {% endif %}
+    <!--- end of product detail style -->
+
+    {% if title == 'Index' %}
+    <style>
+    html,body {
+      position: relative;
+      height: 100%;
+    }
+
+    .swiper {
+      width: 100%;
+      height: 700px;
+
+    }
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+
+    .card {
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        transform: scale(1.06);
+    }
+
+  </style>
+    {% endif %}
+
+
 </head>
 <body>
-    <p>Hello World!</p>
+
+    <div  id="app">
+        <div class="container-fluid m-0 p-0">
+            <!-- sub header -->
+            <div class="container-fluid p-0 d-none">
+                <div class="row  mx-5 py-3">
+                    <div class="col-6 m-0 p-0">
+                        <div class="box">
+                            <p class="m-0 p-0">
+                                <span class="text-danger"><i class="fa-solid fa-phone-volume"></i></span>
+                                xxx xxx xxx
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-6 m-0 p-0">
+                        <div class="box">
+                            <p class="m-0 p-0 text-end">
+                                Welcome Visitor!
+                                <span>
+                                    <a href="#" class="text-danger">Log in</a>
+                                </span>
+                                or
+                                <span>
+                                    <a href="#" class="text-danger">Register</a>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of sub header -->
+
+            <!-- header -->
+            <div class="container-fluid bg-light p-0 mb-4 ">
+                <nav class="navbar navbar-expand-lg m-0 p-0 px-5 py-3">
+                  <div class="container-fluid p-0">
+
+                  <a href="{% url 'index' %}" class="navbar-brand text-decoration-none text-dark">
+                      <h1 class="m-0 fs-1 fw-semibold mb-2">
+                          <span class="text-danger">S</span><span class="text-info">h</span><span class="text-warning">o</span><span class="text-secondary">pier.</span>
+                      </h1>
+                  </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                          <li class="nav-item">
+                              <a class="nav-link {% if title == 'Index' %} active text-decoration-underline text-danger{% endif %}" href="{% url 'index' %}">Home</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link {% if title == 'Shop' %} active text-decoration-underline text-danger{% endif %}" href="{% url 'shop' %}">Shopping</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link {% if title == 'About' %} active text-decoration-underline text-danger{% endif %}" href="{% url 'about' %}">About</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link {% if title == 'Contact' %} active text-decoration-underline text-danger{% endif %}" href="{% url 'contact' %}">Contact</a>
+                          </li>
+                      </ul>
+                        <div>
+                            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                              <li class="nav-item">
+                                  <a class="nav-link {% if title == 'Cart' %} active text-decoration-underline text-primary{% endif %}
+                                            position-relative
+                                    "
+                                     style="font-size:20px;"
+                                     href="{% url 'cart' %} ">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <p class="position-absolute badge rounded-pill bg-danger text-white" style="font-size:9px;top:3px;left:20px;">
+                                            [[ cart_qty ]]
+                                        </p>
+                                  </a>
+                              </li>
+                              <li class="nav-item d-none">
+                                  <a class="nav-link {% if title == 'Index' %} active text-decoration-underline text-danger{% endif %}"
+                                     style="font-size:20px;"
+                                     href="#">
+                                    <i class="fa-solid fa-user-secret"></i>
+                                  </a>
+                              </li>
+                          </ul>
+                        </div>
+                    </div>
+                  </div>
+                </nav>
+            </div>
+            <!-- end of header -->
+
+            <!-- slider -->
+            {% if title == 'Index' %}
+                    <!-- Swiper -->
+                    <div class="container-fluid my-5 py-5 position-relative">
+                        <div class="container">
+                            <div class="swiper mySwiper">
+                            <div class="swiper-wrapper h-100">
+
+                                <div class="swiper-slide  h-100">
+                                    <div class="row  h-100  m-0 p-0">
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box ms-5 p-2 h-100 d-flex justify-content-center align-items-center">
+                                                <div class=" position-relative">
+                                                    <p class="display-1 fw-semibold">
+                                                        Men's <br>
+                                                        Collections
+                                                    </p>
+                                                    <p class="position-absolute display-1 fw-semibold"
+                                                       style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
+                                                    >
+                                                        2025
+                                                    </p>
+                                                    <p class="text-black w-100">
+                                                        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
+                                                    </p>
+                                                    <p>
+                                                        <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box  h-100">
+                                                <img src="{% static 'image/slider/1-Photoroom.png' %}"
+                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
+                                                >
+                                                <p>hello world!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide  h-100">
+                                    <div class="row  h-100  m-0 p-0">
+                                        <div class="col-xl-6 h-100 ">
+                                            <div class="box ms-5 p-2 h-100 d-flex justify-content-center align-items-center">
+                                                <div class=" position-relative">
+                                                    <p class="display-1 fw-semibold">
+                                                        Women's <br>
+                                                        Collections
+                                                    </p>
+                                                    <p class="position-absolute display-1 fw-semibold"
+                                                       style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
+                                                    >
+                                                        2025
+                                                    </p>
+                                                    <p class="text-black w-100">
+                                                        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
+                                                    </p>
+                                                    <p>
+                                                        <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box  h-100">
+                                                <img src="{% static 'image/slider/2-Photoroom.png' %}"
+                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
+                                                >
+                                                <p>hello world!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide  h-100">
+                                    <div class="row  h-100  m-0 p-0">
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box ms-5 p-2 h-100 d-flex justify-content-center align-items-center">
+                                                <div class=" position-relative">
+                                                    <p class="display-1 fw-semibold">
+                                                        Women's <br>
+                                                        Collections
+                                                    </p>
+                                                    <p class="position-absolute display-1 fw-semibold"
+                                                       style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
+                                                    >
+                                                        2025
+                                                    </p>
+                                                    <p class="text-black w-100">
+                                                        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
+                                                    </p>
+                                                    <p>
+                                                        <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box  h-100">
+                                                <img src="{% static 'image/slider/3-Photoroom.png' %}"
+                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
+                                                >
+                                                <p>hello world!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide  h-100">
+                                    <div class="row  h-100  m-0 p-0">
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box ms-5 p-2 h-100 d-flex justify-content-center align-items-center">
+                                                <div class=" position-relative">
+                                                    <p class="display-1 fw-semibold">
+                                                        Women's <br>
+                                                        Collections
+                                                    </p>
+                                                    <p class="position-absolute display-1 fw-semibold"
+                                                       style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
+                                                    >
+                                                        2025
+                                                    </p>
+                                                    <p class="text-black w-100">
+                                                        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
+                                                    </p>
+                                                    <p>
+                                                        <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box  h-100">
+                                                <img src="{% static 'image/slider/4-Photoroom.png' %}"
+                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
+                                                >
+                                                <p>hello world!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide  h-100">
+                                    <div class="row  h-100  m-0 p-0">
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box ms-5 p-2 h-100 d-flex justify-content-center align-items-center">
+                                                <div class=" position-relative">
+                                                    <p class="display-1 fw-semibold">
+                                                        Women's <br>
+                                                        Collections
+                                                    </p>
+                                                    <p class="position-absolute display-1 fw-semibold"
+                                                       style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
+                                                    >
+                                                        2025
+                                                    </p>
+                                                    <p class="text-black w-100">
+                                                        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
+                                                    </p>
+                                                    <p>
+                                                        <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box  h-100">
+                                                <img src="{% static 'image/slider/5-Photoroom.png' %}"
+                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
+                                                >
+                                                <p>hello world!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide  h-100">
+                                    <div class="row  h-100  m-0 p-0">
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box ms-5 p-2 h-100 d-flex justify-content-center align-items-center">
+                                                <div class=" position-relative">
+                                                    <p class="display-1 fw-semibold">
+                                                        Women's <br>
+                                                        Collections
+                                                    </p>
+                                                    <p class="position-absolute display-1 fw-semibold"
+                                                       style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
+                                                    >
+                                                        2025
+                                                    </p>
+                                                    <p class="text-black w-100">
+                                                        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
+                                                    </p>
+                                                    <p>
+                                                        <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 h-100">
+                                            <div class="box  h-100">
+                                                <img src="{% static 'image/slider/6-Photoroom.png' %}"
+                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
+                                                >
+                                                <p>hello world!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="swiper-button-next position-absolution text-black" style="top:50%;left:98%;transform: translateX(-50%)"></div>
+                            <div class="swiper-button-prev position-absolution text-black"></div>
+                            <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            <!-- end of slider -->
+
+            <!-- content -->
+
+            {% block content %}{% endblock %}
+
+            <!-- end of content -->
+
+
+            <!-- Footer -->
+            <footer class=" text-light pt-lg-5 pb-lg-3 px-5 py-5" style="margin-top: 20vh;background-color:black">
+                <div class="container-fluid text-start">
+                    <div class="row gy-4">
+                        <!-- About -->
+                        <div class="col-12 col-md-4">
+                            <div class="box ">
+                                <a href="{% url 'index' %}" class="text-decoration-none text-dark">
+                                    <h1 class="m-0 fs-1 fw-semibold mb-2">
+                                        <span class="text-danger">S</span><span class="text-info">h</span><span class="text-warning">o</span><span class="text-secondary">pier.</span>
+                                    </h1>
+                                </a>
+                                <p>
+                                  We provide quality products at affordable prices. Shop with confidence and enjoy great deals every day.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- shopping & categories -->
+                        <div class="col-12 col-md-3">
+                            <div class="box">
+                                <h3 class="mb-3 text-start">Shopping & Categories</h3>
+                                <p class="m-0 p-0 mb-2">
+                                    <a href="#" class="text-decoration-none text-light">
+                                        <i class="fa-solid fa-mars"></i>
+                                        <span class="ms-1">Men's Shopping</span>
+                                    </a>
+                                </p>
+                                <p class="m-0 p-0">
+                                    <a href="#" class="text-decoration-none text-light">
+                                        <i class="fa-solid fa-venus"></i>
+                                        <span class="ms-1">Women's Shopping</span>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div class="col-4 col-md-2">
+                            <div class="box">
+                                <h3 class="mb-3">Quick Links</h3>
+                                <ul class="list-unstyled">
+                                  <li class="mb-2">
+                                      <a href="{% url 'index' %}" class="text-light text-decoration-none">
+                                            <i class="fa-solid fa-house-chimney"></i>
+                                            <span class="ms-1">Home</span>
+                                        </a>
+                                  </li>
+                                  <li class="mb-2">
+                                      <a href="{% url 'shop' %}" class="text-light text-decoration-none">
+                                          <i class="fa-solid fa-shop"></i>
+                                          <span class="ms-1">Shopping</span>
+                                      </a>
+                                  </li>
+                                  <li class="mb-2">
+                                      <a href="{% url 'about' %}" class="text-light text-decoration-none">
+                                          <i class="fa-solid fa-address-card"></i>
+                                          <span class="ms-1">About</span>
+                                      </a>
+                                  </li>
+                                  <li class="mb-2">
+                                      <a href="{% url 'contact' %}" class="text-light text-decoration-none">
+                                          <i class="fa-solid fa-address-book"></i>
+                                          <span class="ms-1">Contact</span>
+                                      </a>
+                                  </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Contact -->
+                        <div class="col-8 col-md-3">
+                            <div class="box">
+                                <h3 class="mb-3">Contact Us</h3>
+                                <p>
+                                    <i class="fa-solid fa-phone-volume"></i>
+                                    +855 10 94 77 90
+                                </p>
+                                <p>
+                                    <i class="fa-solid fa-truck-fast"></i>
+                                    mengsonly5555@example.com
+                                </p>
+                                <div class="mt-3">
+                                  <a href="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
+                                  <a href="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
+                                  <a href="#" class="text-light me-3"><i class="bi bi-instagram"></i></a>
+                                  <a href="#" class="text-light"><i class="bi bi-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-light mt-4" />
+
+                <div>
+                    <p class="text-center m-0 p-0 py-3">
+                        &copy; 2025 Meng Sonly. All rights reserved.
+                    </p>
+                </div>
+            </footer>
+            <!-- end of footer -->
+
+
+        </div>
+
+    </div>
+
+    <!--- bootstrap cdn js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/f30f0231eb.js" crossorigin="anonymous"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 30,
+            centeredSlides: true,
+            loop:true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    </script>
+    <!-- end Initialize Swiper -->
+
+    <!-- vue js -->
+    <script type="module">
+        import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+        const App = {
+            delimiters: ['[[', ']]'],
+                data() {
+                    return {
+
+                        // Pagination
+                        products: [],
+                        visibleProducts: [],
+                        perPage: 10,
+                        currentPage: 1,
+
+                        // add to cart
+                        cart_list : JSON.parse(localStorage.getItem('cart_list') ?? '[]'),
+                        status : false,
+                        productDetail: {}, // <-- define it here
+
+                        name : '',
+                        description : '',
+                        price : 0,
+                        discount_price : 0,
+                        category : '',
+                        image : '',
+                        rate : 0,
+                        qty:0,
+
+                        kh_rate : 4100,
+
+                    };
+                },
+                computed: {
+                    hasNext() {
+                      return this.visibleProducts.length < this.products.length;
+                    },
+                    cart_qty() {
+                        return this.cart_list.length; // dynamically gets the number of items
+                    },
+                    totalAmount(){
+                        let total = 0;
+                        this.cart_list.forEach(item => {
+                            if(item.status === true) {
+                                let subTotal = parseFloat(item.qty) * parseFloat(item.price)
+                                total += subTotal
+                            }
+                        })
+
+                        return {
+                            'total' : total,
+                            'total_usd' : total.toLocaleString(),
+                            'total_kh' : (Math.ceil(total * this.kh_rate / 100) * 100 ).toLocaleString()
+                        }
+                    }
+                },
+                methods: {
+                    loadMore() {
+                        const start = (this.currentPage - 1) * this.perPage;
+                        const end = start + this.perPage;
+                        this.visibleProducts = this.visibleProducts.concat(this.products.slice(start, end));
+                        this.currentPage++;
+                    },
+                    addToCart(product) {
+
+                        let find_index = this.cart_list.findIndex(obj => {
+                            return obj.id === product.id
+                        })
+
+                        if( find_index > -1) {
+                            this.cart_list[find_index].qty++
+                        }
+                        else {
+                            let cart_product = {
+                                'status' : false,
+                                'id' : product.id,
+                                'name' : product.name,
+                                'price' : product.price,
+                                'qty' : 1,
+                                'image' : product.image
+                            }
+
+                            this.cart_list.push(cart_product)
+                        }
+
+                        localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+                        console.log(this.cart_list);
+                    },
+                    subQty(id){
+                        let find_index = this.cart_list.findIndex(obj => {
+                            return obj.id === id
+                        })
+
+                        if( find_index > -1) {
+                            if(this.cart_list[find_index].qty > 1) {
+                                this.cart_list[find_index].qty--
+                            }
+                        }
+
+                        localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+                        console.log(this.cart_list)
+
+                    },
+                    addQty(id){
+                        let find_index = this.cart_list.findIndex(obj => {
+                            return obj.id === id
+                        })
+
+                        if( find_index > -1) {
+                            this.cart_list[find_index].qty++
+                        }
+
+                        localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+                        console.log(this.cart_list);
+                    },
+                    deleteCart(id){
+                        let find_index = this.cart_list.findIndex(obj => {
+                            return obj.id === id
+                        })
+
+                        if (find_index > -1){
+                            this.cart_list.splice(find_index,1)
+                        }
+
+                        console.log(find_index)
+                        localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+                    },
+                    checkedCart(id){
+                        let find_index = this.cart_list.findIndex(obj => {
+                            return obj.id === id
+                        })
+
+                        if(find_index > -1) {
+                            this.cart_list[find_index].status = this.cart_list[find_index].status !== true;
+                        }
+
+                        localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+                        console.log(this.cart_list[find_index].status)
+                    },
+                    product_detail(product) {
+                        this.productDetail = product
+
+                        console.log(this.productDetail)
+                        this.name = this.productDetail.name
+                        this.description = this.productDetail.description
+                        this.category = this.productDetail.category
+                        this.rate = this.productDetail.rate
+                        this.image = this.productDetail.image
+                        this.price = this.productDetail.price
+                        this.discount_price = this.productDetail.discount_price
+                    }
+                },
+                mounted() {
+                    fetch("{% static 'data/product.json' %}")
+                        .then(res => res.json())
+                        .then(data => {
+                            this.products = data;
+                            this.loadMore(); // load first 10
+                    });
+                }
+            };
+
+        createApp(App).mount('#app');
+    </script>
+    <!-- end of vue js -->
+
+
 </body>
 </html>

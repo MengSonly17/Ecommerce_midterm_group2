@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+
+    <div class="container my-5">
+        <h1 class="mt-5 text-uppercase text-bold text-center">
+            featured clothes
+        </h1>
+        <div class=" py-5">
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="box">
+                        <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                            <img src="{% static 'image/feature/7.jpg' %}" class="card-img-top" style="height: 400px;object-fit: contain">
+
+                            <div class="card-body text-black">
+                                <h4 class="card-title">Regular Wrap Shirts</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="box">
+                        <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                            <img src="{% static 'image/feature/8.jpg' %}" class="card-img-top" style="height: 400px;object-fit: contain">
+                            <div class="card-body text-black">
+                                <h4 class="card-title">Bubble Hem Mini Skirts</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="box">
+                        <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                            <img src="{% static 'image/feature/9.jpg' %}" class="card-img-top" style="height: 400px;object-fit: contain">
+                            <div class="card-body text-black">
+                                <h4 class="card-title">Mini Skirts</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="box">
+                        <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                            <img src="{% static 'image/feature/11.jpg' %}" class="card-img-top" style="height: 400px;object-fit: contain">
+                            <div class="card-body text-black">
+                                <h4 class="card-title">Tube Top</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

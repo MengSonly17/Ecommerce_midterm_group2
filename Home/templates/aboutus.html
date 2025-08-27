@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} About us {% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid py-5">
+        <main class="container w-75">
+            <section id="introduction">
+                <h2>Welcome to Our Store!</h2>
+                <p>
+                    We are a passionate team dedicated to bringing you the best products with exceptional customer service. Our journey started in [Year], with a simple mission: to make high-quality products accessible to everyone.
+                </p>
+            </section>
+
+            <section id="mission">
+                <h2>Our Mission</h2>
+                <p>
+                    Our mission is to provide our customers with a curated selection of high-quality products that enhance their lives. We believe in quality, affordability, and sustainability.
+                </p>
+                <div id="more-mission" style="display: none;">
+                    <p>We are committed to sourcing our products from ethical and sustainable sources. We work directly with manufacturers to ensure the best quality and prices for our customers. We also believe in giving back to the community and a portion of our profits goes to various charities.</p>
+                </div>
+                <button id="read-more-btn" class="rounded">Read More</button>
+            </section>
+        </main>
+    </div>
+
+    <div class="container-fluid bg-light py-5">
+        <div class="container p-0 w-75 mb-5">
+          <div class="team-section">
+            <div class="container p-0">
+                <h1 class="section-title text-center fw-bolder " style="margin:40px 0 60px;">Meet Our Team</h1>
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+                        <div class="card team-card mx-4 my-3 mb-md-4 mt-md-2 mb-lg-4 mt-lg-1 m-md-0 m-lg-0">
+                            <img src="{% static 'image/members/mengsonly.jpg' %}" style="height: 340px;object-fit: cover;" class="card-img-top" alt="Team Member">
+                            <div class="card-body">
+                                <h5 class="card-title">Meng Sonly</h5>
+                                <p class="card-subtitle">Project Owner & Developer</p>
+                                <div class="social-icons mt-3">
+                                    <a href="#" class="me-2"><i class="fa-brands fa-facebook"></i></a>
+                                    <a href="#" class="me-2"><i class="fa-brands fa-square-instagram"></i></a>
+                                    <a href="#"><i class="fa-brands fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+                        <div class="card team-card mx-4 my-3 mb-md-4 mt-md-2 mb-lg-4 mt-lg-1 m-md-0 m-lg-0">
+                            <img src="{% static 'image/members/pisethratheany.jpg' %}" style="height: 340px;object-fit: cover;" class="card-img-top" alt="Team Member">
+                            <div class="card-body">
+                                <h5 class="card-title">Piseth Ratheany</h5>
+                                <p class="card-subtitle">Push Project To Github</p>
+                                <div class="social-icons mt-3">
+                                    <a href="#" class="me-2"><i class="fa-brands fa-facebook"></i></a>
+                                    <a href="#" class="me-2"><i class="fa-brands fa-square-instagram"></i></a>
+                                    <a href="#"><i class="fa-brands fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+                        <div class="card team-card mx-4 my-3 mb-md-4 mt-md-2 mb-lg-4 mt-lg-1 m-md-0 m-lg-0">
+                            <img src="{% static 'image/members/khovbunvathana.jpg' %}" style="height: 340px;object-fit: cover;" class="card-img-top" alt="Team Member">
+                            <div class="card-body">
+                                <h5 class="card-title">Khov Bunvathana</h5>
+                                <p class="card-subtitle">Deploy Project</p>
+                                <div class="social-icons mt-3">
+                                    <a href="#" class="me-2"><i class="fa-brands fa-facebook"></i></a>
+                                    <a href="#" class="me-2"><i class="fa-brands fa-square-instagram"></i></a>
+                                    <a href="#"><i class="fa-brands fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+                        <div class="card team-card mx-4 my-3 mb-md-4 mt-md-2 mb-lg-4 mt-lg-1 m-md-0 m-lg-0">
+                            <img src="{% static 'image/members/oemsereyleap.jpg' %}" style="height: 340px;object-fit: cover;" class="card-img-top" alt="Team Member">
+                            <div class="card-body">
+                                <h5 class="card-title">Oem Sereyleap</h5>
+                                <p class="card-subtitle">Tester</p>
+                                <div class="social-icons mt-3">
+                                    <a href="#" class="me-2"><i class="fa-brands fa-facebook"></i></a>
+                                    <a href="#" class="me-2"><i class="fa-brands fa-square-instagram"></i></a>
+                                    <a href="#"><i class="fa-brands fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+{% endblock %}
