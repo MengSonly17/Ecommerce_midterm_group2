@@ -618,7 +618,6 @@
 
 
         </div>
-
     </div>
 
 
@@ -640,7 +639,7 @@
                 data() {
                     return {
 
-                        // Pagination
+                        // Pagination or reload more product
                         products: [],
                         visibleProducts: [],
                         perPage: 10,
@@ -648,11 +647,14 @@
 
                         // add to cart
                         cart_list : JSON.parse(localStorage.getItem('cart_list') ?? '[]'),
-                        status : false,
-                        productDetail: {}, // <-- define it here
 
+                        // product detail
+                        productDetail: {},
+
+                        // variable
                         name : '',
                         description : '',
+                        status : false,
                         price : 0,
                         discount_price : 0,
                         category : '',
@@ -660,6 +662,7 @@
                         rate : 0,
                         qty:0,
 
+                        // khmer rate per dollar
                         kh_rate : 4100,
 
                     };
@@ -669,7 +672,7 @@
                       return this.visibleProducts.length < this.products.length;
                     },
                     cart_qty() {
-                        return this.cart_list.length; // dynamically gets the number of items
+                        return this.cart_list.length; // dynamically gets the number of cart
                     },
                     totalAmount(){
                         let total = 0;
@@ -717,6 +720,14 @@
                         }
 
                         localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+
+                        Swal.fire({
+                          position: "center",
+                          icon: "success",
+                          title: "Your product has been added to cart",
+                          showConfirmButton: false,
+                          timer: 1000
+                        });
                         console.log(this.cart_list);
                     },
                     subQty(id){
@@ -747,16 +758,35 @@
                         console.log(this.cart_list);
                     },
                     deleteCart(id){
-                        let find_index = this.cart_list.findIndex(obj => {
-                            return obj.id === id
-                        })
+                        Swal.fire({
+                          title: "Are you sure?",
+                          text: "You won't be able to revert this!",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "Yes, remove it!"
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            Swal.fire({
+                              title: "Removed!",
+                              text: "Your file has been removed.",
+                              icon: "success",
+                                timer:1500
+                            });
+                            let find_index = this.cart_list.findIndex(obj => {
+                                return obj.id === id
+                            })
 
-                        if (find_index > -1){
-                            this.cart_list.splice(find_index,1)
-                        }
+                            if (find_index > -1){
+                                this.cart_list.splice(find_index,1)
+                            }
 
-                        console.log(find_index)
-                        localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+                            console.log(find_index)
+                            localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+                          }
+                        });
+
                     },
                     checkedCart(id){
                         let find_index = this.cart_list.findIndex(obj => {
