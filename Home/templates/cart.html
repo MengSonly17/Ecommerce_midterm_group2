@@ -72,7 +72,7 @@
                     <h3>Order Summary</h3>
                     <div class="summary-item">
                         <span class="label">Subtotal</span>
-                        <span id="sub_total">$ [[ totalAmount.total ]]</span>
+                        <span id="sub_total">$ [[ totalAmount.total_usd]] </span>
                     </div>
                     <div class="summary-item">
                         <span class="label">Delivery Fee</span>
@@ -81,14 +81,14 @@
                     <hr class="my-3">
                     <div class="summary-total">
                         <div class=" d-flex">
-                            <p class="label">Total</p>
+                            <p class="label">Total(USD)</p>
                             <p class="ms-auto">
                                 <span>$</span>
                                 <span id="total"> [[ totalAmount.total_usd]] </span>
                             </p>
                         </div>
                         <div class=" d-flex">
-                            <p class="label">Total</p>
+                            <p class="label">Total(KMR)</p>
                             <p class="ms-auto">
                                 <span>រ</span>
                                 <span id="total"> [[ totalAmount.total_kh]] </span>
@@ -96,7 +96,7 @@
                         </div>
                     </div>
 
-                    <a href="/checkout" id="btnCheckOut" disabled class="btn w-100 btn-checkout" style="background-color:#68df65">Go to Checkout</a>
+                    <a href="{% url 'checkout' %}" id="btnCheckOut" disabled class="btn w-100 btn-checkout" style="background-color:#68df65">Go to Checkout</a>
                 </div>
             </div>
         </div>
