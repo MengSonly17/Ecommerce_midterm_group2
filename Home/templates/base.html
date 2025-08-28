@@ -721,6 +721,7 @@
                           showConfirmButton: false,
                           timer: 1000
                         });
+
                         console.log(this.cart_list);
                     },
                     subQty(id){
@@ -804,6 +805,11 @@
                         this.image = this.productDetail.image
                         this.price = this.productDetail.price
                         this.discount_price = this.productDetail.discount_price
+
+
+                    },
+                    test(){
+                        this.addToCart(this.productDetail)
                     }
                 },
                 mounted() {
