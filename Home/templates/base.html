@@ -182,9 +182,9 @@
 <body>
 
     <div>
-        <div class="container-fluid m-0 p-0"  id="app">
+        <div class="m-0 p-0"  id="app">
             <!-- sub header -->
-            <div class="container-fluid p-0 d-none">
+            <div class="p-0 d-none">
                 <div class="row  mx-5 py-3">
                     <div class="col-6 m-0 p-0">
                         <div class="box">
@@ -213,7 +213,7 @@
             <!-- end of sub header -->
 
             <!-- header -->
-            <div class="container-fluid bg-light p-0 mb-4 ">
+            <div class="bg-light p-0 mb-4 ">
                 <nav class="navbar navbar-expand-lg m-0 p-0 px-5 py-3">
                   <div class="container-fluid p-0">
 
@@ -273,7 +273,7 @@
 
             <!-- slider -->
             {% if title == 'Index' %}
-                <div class="container-fluid p-3" style="margin:30px 0 140px;">
+                <div class="p-3" style="margin:30px 0 140px;">
                     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
 
@@ -508,7 +508,7 @@
 
             <!-- Footer -->
             <footer class=" text-light pt-lg-5 pb-lg-3 px-5 py-5" style="margin-top: 20vh;background-color:black">
-                <div class="container-fluid text-start">
+                <div class="text-start">
                     <div class="row gy-4">
                         <!-- About -->
                         <div class="col-12 col-md-4">
@@ -681,6 +681,14 @@
                             'total_usd' : total.toLocaleString(),
                             'total_kh' : (Math.ceil(total * this.kh_rate / 100) * 100 ).toLocaleString()
                         }
+                    },
+                    selectedProduct(){
+                        let selected = false
+                        selected = this.cart_list.filter(item => {
+                            return item.status === true
+                        })
+
+                        console.log(selected)
                     }
                 },
                 methods: {
