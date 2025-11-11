@@ -2,86 +2,228 @@
 
 {% load static %}
 
-{% block title %} Check out {% endblock %}
+{% block title %} Check Out {% endblock %}
 
 {% block content %}
 
-    <div class="checkout-container">
-        <div class="checkout-header mb-5">
-            <h2>Secure Checkout</h2>
-            <p class="text-muted">Complete your purchase quickly and safely</p>
-        </div>
-        <div class="row g-4">
-            <!-- Billing Details -->
-            <div class="col-md-6">
-                <h4 class="mb-3">Billing Details</h4>
-                <form>
-                    <div class="mb-3">
-                        <label for="fullName" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="fullName" placeholder="John Doe" required>
+    <div class="container">
+        <div class="checkout-container">
+            <form  @submit.prevent="add_customer_info" class="checkout-form">
+                {% csrf_token %}
+                <h1>Checkout</h1>
+
+                <div class="form-section">
+                    <h2>Contact Information</h2>
+                    <div class="form-group">
+                        <label for="phone-number" class="required">Phone Number</label>
+                        <input type="text" id="phone-number" v-model="phoneNumber" required placeholder="097 29 06 610">
                     </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+                    <div class="form-group">
+                        <label for="email" class="required">Email Address</label>
+                        <input type="email" id="email" v-model="email" placeholder="your@email.com" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="123 Main St" required>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" class="form-control" id="city" placeholder="New York" required>
+                </div>
+
+                <div class="form-section">
+                    <h2>Delivery Location</h2>
+                    <div class="location-details" id="home-details">
+                        <div class="form-group">
+                            <label for="full-name" class="required">Full Name</label>
+                            <input type="text" id="full-name" v-model="fullName" placeholder="Meng Sonly" required>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="zip" class="form-label">ZIP Code</label>
-                            <input type="text" class="form-control" id="zip" placeholder="10001" required>
+
+                        <div class="form-group">
+                            <label for="address" class="required">Address</label>
+                            <input type="text" id="address" v-model="address" required placeholder="No. 86A, Street 110, Russian Federation Blvd (110), Phnom Penh">
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="cardNumber" class="form-label">Card Number</label>
-                        <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="expiry" class="form-label">Expiry Date</label>
-                            <input type="text" class="form-control" id="expiry" placeholder="MM/YY" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="cvc" class="form-label">CVC</label>
-                            <input type="text" class="form-control" id="cvc" placeholder="123" required>
+
+                        <div class="form-group">
+                            <label for="instructions">Delivery Instructions (Optional)</label>
+                            <textarea id="instructions" v-model="instructions" rows="3" placeholder="e.g., Leave at front door, ring bell, etc."></textarea>
                         </div>
                     </div>
-                </form>
-            </div>
-            <!-- Order Summary -->
-            <div class="col-md-6">
-                <div class="order-summary">
-                    <h4 class="mb-3">Order Summary</h4>
-                    <div class="mb-3 pb-3" style="border-bottom: 1px solid #a8a8a8">
-                        <div v-for="item in cart_list">
-                            <div v-if="item.status === true" class="order-item">
-                                <span>
-                                    [[ item.name ]] <span class="text-danger">(x[[ item.qty ]])</span>
-                                </span>
-                                <span>$ [[ item.price ]]</span>
+
+                </div>
+
+                <div class="form-section">
+                    <h2 class=" mb-4">Currency Type</h2>
+
+                    <div class="payment-options">
+                        <div class="payment-option">
+                            <input type="radio" id="usd-payment" name="payment-method" value="USD" v-model="currencyType" checked>
+                            <label for="usd-payment" class="payment-label">
+                                <span class="radio-indicator"></span>
+                                <div class="payment-icon usd-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="payment-text">
+                                    <div class="payment-title">USD</div>
+                                    <div class="payment-desc">Pay with US Dollars via <b>KHQR</b></div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="payment-option">
+                            <input type="radio" id="riel-payment" name="payment-method" v-model="currencyType" value="KHR">
+                            <label for="riel-payment" class="payment-label">
+                                <span class="radio-indicator"></span>
+                                <div class="payment-icon riel-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="payment-text">
+                                    <div class="payment-title">Riel</div>
+                                    <div class="payment-desc">Pay with Cambodian Riel via <b>KHQR</b></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" >Complete Order</button>
+
+
+                <div class="secure-checkout">
+                    <i class="fas fa-lock"></i> Your payment information is secure and encrypted
+                </div>
+
+{#                <a href="{% url 'cart' %}" class="back-to-cart">← Back to cart</a>#}
+            </form>
+
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+
+                {# product check out #}
+                <div class="order-items">
+                    <div class="order-item" v-for="item in getSelectedCartItems">
+                        <div class="item-details">
+                            <div class="item-image">
+                                <img :src="`static/image/clothes/${item.image}`" alt="" style="width:60px;height:60px;object-fit: cover;">
+                            </div>
+                            <div>
+                                <p class="item-name m-0">[[ item.name ]]</p>
+                                <p>Quantity: [[ item.qty ]]</p>
                             </div>
                         </div>
+                        <div class="item-price">$[[ item.price ]]</div>
                     </div>
-                    <div class="order-item fw-bold">
-                        <span>Total (USD) : </span>
-                        <span>$[[ totalAmount.total_usd]]</span>
+                </div>
+                {# end of product check out #}
+
+                {# total amount #}
+                <div class="summary-details">
+                    <div class="summary-row">
+                        <div>Subtotal</div>
+                        <div>$[[ totalAmount.total_usd ]]</div>
                     </div>
-                    <div class="order-item fw-bold">
-                        <span>Total (KMR) : </span>
-                        <span>រ[[ totalAmount.total_kh]]</span>
+                    <div class="summary-row">
+                        <div>Shipping</div>
+                        <div>$[[ totalAmount.shipping ]]</div>
                     </div>
-                    <button type="button" class="btn btn-pay w-100 mt-4">Pay Now</button>
-                    <div class="secure-badge">
-                        <i class="bi bi-lock-fill"></i> Secure Payment
+                    <div class="summary-row summary-total">
+                        <div>Total <sup>(usd)</sup></div>
+                        <div>$[[ totalAmount.totalPlusShip_usd ]]</div>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <div>Total <sup>(riel)</sup></div>
+                        <div>[[ totalAmount.totalPlusShip_kh ]]</div>
+                    </div>
+                </div>
+                {# end of total amount #}
+
+
+                <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <i class="fas fa-shipping-fast" style="color: var(--primary); margin-right: 10px;"></i>
+                        <div>
+                            <div style="font-weight: 500;">Free Shipping</div>
+                            <div style="font-size: 14px; color: var(--secondary);">On orders over $50</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <i class="fas fa-undo" style="color: var(--primary); margin-right: 10px;"></i>
+                        <div>
+                            <div style="font-weight: 500;">Easy Returns</div>
+                            <div style="font-size: 14px; color: var(--secondary);">30-day return policy</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
+
 {% endblock %}
+
+
+
+
+{#{% extends 'base.html' %}#}
+{##}
+{#{% load static %}#}
+{##}
+{#{% block title %} Check out {% endblock %}#}
+{##}
+{#{% block content %}#}
+{##}
+{#    <div class="checkout-container">#}
+{#        <div class="checkout-header mb-5">#}
+{#            <h2>Secure Checkout</h2>#}
+{#            <p class="text-muted">Complete your purchase quickly and safely</p>#}
+{#        </div>#}
+{#        <div class="row g-4">#}
+{#            <!-- Billing Details -->#}
+{#            <div class="col-md-6">#}
+{#                <h4 class="mb-3">Billing Details</h4>#}
+{#                <form>#}
+{#                    <div class="mb-3">#}
+{#                        <label for="fullName" class="form-label">Full Name</label>#}
+{#                        <input type="text" class="form-control" id="fullName" placeholder="John Doe" required>#}
+{#                    </div>#}
+{#                    <div class="mb-3">#}
+{#                        <label for="email" class="form-label">Email Address</label>#}
+{#                        <input type="email" class="form-control" id="email" placeholder="john@example.com" required>#}
+{#                    </div>#}
+{#                    <div class="mb-3">#}
+{#                        <label for="address" class="form-label">Address</label>#}
+{#                        <input type="text" class="form-control" id="address" placeholder="123 Main St" required>#}
+{#                    </div>#}
+{#                    <div class="mb-3">#}
+{#                        <label for="cardNumber" class="form-label">Phone Number</label>#}
+{#                        <input type="text" class="form-control" id="cardNumber" placeholder="0123 456 789" required>#}
+{#                    </div>#}
+{#                </form>#}
+{#            </div>#}
+{#            <!-- Order Summary -->#}
+{#            <div class="col-md-6">#}
+{#                <div class="order-summary">#}
+{#                    <h4 class="mb-3">Order Summary</h4>#}
+{#                    <div class="mb-3 pb-3" style="border-bottom: 1px solid #a8a8a8">#}
+{#                        <div v-for="item in cart_list">#}
+{#                            <div v-if="item.status === true" class="order-item">#}
+{#                                <span>#}
+{#                                    [[ item.name ]] <span class="text-danger">(x[[ item.qty ]])</span>#}
+{#                                </span>#}
+{#                                <span>$ [[ item.price ]]</span>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="order-item fw-bold">#}
+{#                        <span>Total (USD) : </span>#}
+{#                        <span>$[[ totalAmount.total_usd]]</span>#}
+{#                    </div>#}
+{#                    <div class="order-item fw-bold">#}
+{#                        <span>Total (KMR) : </span>#}
+{#                        <span>រ[[ totalAmount.total_kh]]</span>#}
+{#                    </div>#}
+{#                    <button type="button" class="btn btn-pay w-100 mt-4">Pay Now</button>#}
+{#                    <div class="secure-badge">#}
+{#                        <i class="bi bi-lock-fill"></i> Secure Payment#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}

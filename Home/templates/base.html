@@ -4,14 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Home{% endblock %}</title>
-
+    <!-- In your Django template (e.g., base.html) -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <!--- bootstrap cdn css -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!--- end of bootstrap cdn css -->
+
 
     <!--- about page linking style -->
     <link href="{% static 'css/about.css' %}" rel="stylesheet">
     <!--- end of about page linking style -->
+
+    <!--- start of contact page linking style -->
+    {% if title == 'Contact' %}
+    <link href="{% static 'css/emailSend.css' %}" rel="stylesheet">
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "efI7RzSvFQyYdcGP4",
+            });
+        })();
+    </script>
+    {% endif     %}
+    <!--- end of contact page linking style -->
 
     <!--- shop page linking to style -->
     {% if title == 'Shop' %}
@@ -60,159 +80,100 @@
     {% endif %}
     <!--- end of product detail style -->
 
-    {% if title == 'Index' %}
-    <style>
-    html,body {
-      position: relative;
-      height: 100%;
-    }
-
-    .swiper {
-      width: 100%;
-      height: 700px;
-
-    }
-
-    .swiper-slide {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-
-
-    .card {
-        transition: all 0.3s;
-        cursor: pointer;
-    }
-
-    .card:hover {
-        transform: scale(1.06);
-    }
-
-  </style>
-    {% endif %}
-
+    <!--- check out style -->
     {% if title == 'Checkout' %}
-    <style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="{% static 'css/checkout.css' %}" type="text/css">
+    {% endif %}
+    <!--- end of checkout style -->
 
-        .checkout-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 30px;
-            background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    <!--- start of swiper slider style -->
+    {% if title == 'Index' %}
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Demo styles -->
+    <style>
+        html,
+        body {
+          position: relative;
+          height: 100%;
         }
-        .checkout-header {
-            text-align: center;
-            margin-bottom: 30px;
+
+        :root  {
+            --swiper-theme-color: #acacac;
         }
-        .checkout-header h2 {
-            font-weight: 600;
-            color: #2c3e50;
+
+        .swiper {
+            width: 100%;
+            height: 720px;
         }
-        .form-label {
-            font-weight: 500;
-            color: #34495e;
-        }
-        .form-control {
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .form-control:focus {
-            border-color: #6c5ce7;
-            box-shadow: 0 0 8px rgba(108, 92, 231, 0.3);
-        }
-        .order-summary {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 25px;
-            border: 1px solid #e9ecef;
-        }
-        .order-summary h4 {
-            color: #2c3e50;
-            font-weight: 600;
-        }
-        .order-item {
+
+        .swiper-slide {
+            font-size: 18px;
             display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #e9ecef;
-        }
-        .order-item:last-child {
-            border-bottom: none;
-        }
-        .btn-pay {
-            background: linear-gradient(90deg, #6c5ce7, #a29bfe);
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .btn-pay:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
-        }
-        .secure-badge {
-            display: flex;
-            align-items: center;
             justify-content: center;
-            margin-top: 20px;
-            color: #6c757d;
-            font-size: 0.9rem;
+            align-items: center;
+            padding:0 150px;
         }
-        .secure-badge i {
-            margin-right: 5px;
-            color: #28a745;
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        @media (max-width: 768px) {
-            .checkout-container {
-                margin: 20px;
-                padding: 20px;
-            }
+
+        .autoplay-progress {
+          position: absolute;
+          right: 16px;
+          bottom: 16px;
+          z-index: 10;
+          width: 48px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          color: var(--swiper-theme-color);
+        }
+
+        .autoplay-progress svg {
+          --progress: 0;
+          position: absolute;
+          left: 0;
+          top: 0px;
+          z-index: 10;
+          width: 100%;
+          height: 100%;
+          stroke-width: 4px;
+          stroke: var(--swiper-theme-color);
+          fill: none;
+          stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
+          stroke-dasharray: 125.6;
+          transform: rotate(-90deg);
+        }
+
+        .swiper-button-next  , .autoplay-progress  {
+            {#background-color: red;#}
+            margin-right:60px;
+        }
+
+        .swiper-button-prev {
+            {#background-color: red;#}
+            margin-left:60px;
         }
     </style>
     {% endif %}
+    <!--- end of swiper slider style -->
 
 </head>
 <body>
-
     <div>
         <div class="m-0 p-0"  id="app">
-            <!-- sub header -->
-            <div class="p-0 d-none">
-                <div class="row  mx-5 py-3">
-                    <div class="col-6 m-0 p-0">
-                        <div class="box">
-                            <p class="m-0 p-0">
-                                <span class="text-danger"><i class="fa-solid fa-phone-volume"></i></span>
-                                xxx xxx xxx
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6 m-0 p-0">
-                        <div class="box">
-                            <p class="m-0 p-0 text-end">
-                                Welcome Visitor!
-                                <span>
-                                    <a href="#" class="text-danger">Log in</a>
-                                </span>
-                                or
-                                <span>
-                                    <a href="#" class="text-danger">Register</a>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end of sub header -->
 
             <!-- header -->
+            {% if title != 'payment_page' %}
             <div class="bg-light p-0 mb-4 ">
                 <nav class="navbar navbar-expand-lg m-0 p-0 px-5 py-3">
                   <div class="container-fluid p-0">
@@ -269,235 +230,59 @@
                   </div>
                 </nav>
             </div>
+            {% endif %}
             <!-- end of header -->
 
             <!-- slider -->
             {% if title == 'Index' %}
-                <div class="p-3" style="margin:30px 0 140px;">
-                    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-
-                            <div class="carousel-item active">
-                                <div class="swiper-slide">
-                                    <div class="row m-0 p-0 px-5" style="height: 750px">
-                                        <div class="col-xl-6 h-100">
-                                                <div class="box p-2 h-100 d-flex justify-content-center align-items-center">
-                                                    <div class=" position-relative" style="width:600px;">
-                                                        <p class="display-1 fw-semibold">
-                                                            Men's <br>
-                                                            Collections
-                                                        </p>
-                                                        <p class="position-absolute display-1 fw-semibold"
-                                                           style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
-                                                        >
-                                                            2025
-                                                        </p>
-                                                        <p class="text-black w-100">
-                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                                                        </p>
-                                                        <p>
-                                                            <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <div class="col-xl-6 h-100">
-                                            <div class="box  h-100">
-                                                <img src="{% static 'image/slider/1-Photoroom.png' %}"
-                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
-                                                >
-                                            </div>
-                                            </div>
-                                    </div>
-                                </div>
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    {% for slider in sliders %}
+                    <div class="swiper-slide" >
+                        <div class="col-xl-6 h-100 p-2 h-100 d-flex justify-content-center align-items-center">
+                            <div class="ps-5 position-relative" style="width:600px;">
+                                <p class="display-1 fw-semibold">
+                                    {{ slider.title }} <br>
+                                    {{ slider.collection }}
+                                </p>
+                                <p class="position-absolute display-1 fw-semibold"
+                                   style="top:50%;left:50%;transform: translate(-60%,-60%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
+                                >
+                                    {{ slider.year }}
+                                </p>
+                                <p class="text-black w-100">
+                                    {{ slider.description }}
+                                </p>
+                                <p>
+                                    <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
+                                </p>
                             </div>
-                            <div class="carousel-item">
-                                <div class="swiper-slide">
-                                    <div class="row m-0 p-0 px-5" style="height: 750px">
-                                        <div class="col-xl-6 h-100">
-                                                <div class="box p-2 h-100 d-flex justify-content-center align-items-center">
-                                                    <div class=" position-relative" style="width:600px;">
-                                                        <p class="display-1 fw-semibold">
-                                                            Women's <br>
-                                                            Collections
-                                                        </p>
-                                                        <p class="position-absolute display-1 fw-semibold"
-                                                           style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
-                                                        >
-                                                            2025
-                                                        </p>
-                                                        <p class="text-black w-100">
-                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                                                        </p>
-                                                        <p>
-                                                            <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <div class="col-xl-6 h-100">
-                                            <div class="box  h-100">
-                                                <img src="{% static 'image/slider/2-Photoroom.png' %}"
-                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
-                                                >
-                                            </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="swiper-slide">
-                                    <div class="row m-0 p-0 px-5" style="height: 750px">
-                                        <div class="col-xl-6 h-100">
-                                                <div class="box p-2 h-100 d-flex justify-content-center align-items-center">
-                                                    <div class=" position-relative" style="width:600px;">
-                                                        <p class="display-1 fw-semibold">
-                                                            Women's <br>
-                                                            Collections
-                                                        </p>
-                                                        <p class="position-absolute display-1 fw-semibold"
-                                                           style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
-                                                        >
-                                                            2025
-                                                        </p>
-                                                        <p class="text-black w-100">
-                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                                                        </p>
-                                                        <p>
-                                                            <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <div class="col-xl-6 h-100">
-                                            <div class="box  h-100">
-                                                <img src="{% static 'image/slider/3-Photoroom.png' %}"
-                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
-                                                >
-                                            </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="swiper-slide">
-                                    <div class="row m-0 p-0 px-5" style="height: 750px">
-                                        <div class="col-xl-6 h-100">
-                                                <div class="box p-2 h-100 d-flex justify-content-center align-items-center">
-                                                    <div class=" position-relative" style="width:600px;">
-                                                        <p class="display-1 fw-semibold">
-                                                            Women's <br>
-                                                            Collections
-                                                        </p>
-                                                        <p class="position-absolute display-1 fw-semibold"
-                                                           style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
-                                                        >
-                                                            2025
-                                                        </p>
-                                                        <p class="text-black w-100">
-                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                                                        </p>
-                                                        <p>
-                                                            <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <div class="col-xl-6 h-100">
-                                            <div class="box  h-100">
-                                                <img src="{% static 'image/slider/4-Photoroom.png' %}"
-                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
-                                                >
-                                            </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="swiper-slide">
-                                    <div class="row m-0 p-0 px-5" style="height: 750px">
-                                        <div class="col-xl-6 h-100">
-                                                <div class="box p-2 h-100 d-flex justify-content-center align-items-center">
-                                                    <div class=" position-relative" style="width:600px;">
-                                                        <p class="display-1 fw-semibold">
-                                                            Women's <br>
-                                                            Collections
-                                                        </p>
-                                                        <p class="position-absolute display-1 fw-semibold"
-                                                           style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
-                                                        >
-                                                            2025
-                                                        </p>
-                                                        <p class="text-black w-100">
-                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                                                        </p>
-                                                        <p>
-                                                            <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <div class="col-xl-6 h-100">
-                                            <div class="box  h-100">
-                                                <img src="{% static 'image/slider/5-Photoroom.png' %}"
-                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
-                                                >
-                                            </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="swiper-slide">
-                                    <div class="row m-0 p-0 px-5" style="height: 750px">
-                                        <div class="col-xl-6 h-100">
-                                                <div class="box p-2 h-100 d-flex justify-content-center align-items-center">
-                                                    <div class=" position-relative" style="width:600px;">
-                                                        <p class="display-1 fw-semibold">
-                                                            Women's <br>
-                                                            Collections
-                                                        </p>
-                                                        <p class="position-absolute display-1 fw-semibold"
-                                                           style="top:50%;left:50%;transform: translate(-65%,-80%);font-size: 200px;z-index: -1;color:rgba(209,209,209,0.54);"
-                                                        >
-                                                            2025
-                                                        </p>
-                                                        <p class="text-black w-100">
-                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                                                        </p>
-                                                        <p>
-                                                            <a href="{% url 'shop' %}" class="btn text-white bg-black" >show now</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <div class="col-xl-6 h-100">
-                                            <div class="box  h-100">
-                                                <img src="{% static 'image/slider/6-Photoroom.png' %}"
-                                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
-                                                >
-                                            </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
                         </div>
-
-
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                         <button class="carousel-control-next  " type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                        <div class="col-xl-6 h-100 p-2 h-100 d-flex justify-content-center align-items-center">
+                            <div class="box h-100">
+                                <img src="static/{{ slider.image }}"
+                                     style="width:100%;height:100%;object-fit: contain; background-blend-mode: multiply"
+                                >
+                            </div>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
+
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+
+                {% if size >= 2 %}
+                <div class="autoplay-progress">
+                  <svg viewBox="0 0 48 48">
+                    <circle cx="24" cy="24" r="20"></circle>
+                  </svg>
+                  <span></span>
+                </div>
+                {% endif %}
+
+            </div>
             {% endif %}
             <!-- end of slider -->
 
@@ -505,8 +290,8 @@
             {% block content %}{% endblock %}
             <!-- end of content -->
 
-
             <!-- Footer -->
+            {% if title != 'payment_page' %}
             <footer class=" text-light pt-lg-5 pb-lg-3 px-5 py-5" style="margin-top: 20vh;background-color:black">
                 <div class="text-start">
                     <div class="row gy-4">
@@ -607,6 +392,7 @@
                     </p>
                 </div>
             </footer>
+            {% endif %}
             <!-- end of footer -->
 
 
@@ -614,15 +400,22 @@
     </div>
 
 
+
+    {% if title == 'Contact' %}
+        <script src="{% static 'js/sendEmail.js' %}" ></script>
+    {% endif %}
+
     <!--- bootstrap cdn  js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- sweetalert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/f30f0231eb.js" crossorigin="anonymous"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-
-
+  
     <!-- vue js -->
     <script type="module">
         import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
@@ -631,15 +424,16 @@
             delimiters: ['[[', ']]'],
                 data() {
                     return {
-
-                        // Pagination or reload more product
-                        products: [],
-                        visibleProducts: [],
-                        perPage: 10,
-                        currentPage: 1,
+                        Products: [],
+                        title: 'Shop',
 
                         // add to cart
-                        cart_list : JSON.parse(localStorage.getItem('cart_list') ?? '[]'),
+                        cart_list : [],
+                        total_cart_count : 0,
+                        total_cart_number  : [],
+                        total_cart_check : [],
+                        cart_item : [],
+                        cart_list_detail : [],
 
                         // product detail
                         productDetail: {},
@@ -657,30 +451,54 @@
 
                         // khmer rate per dollar
                         kh_rate : 4100,
+                        delivery_fee : 2,
 
+                        phoneNumber: '010 94 77 90',
+                        email: 'mengsonly@gmail.com',
+                        fullName: 'meng sonly',
+                        address: 'takeo',
+                        instructions: '',
+                        currencyType: 'USD', // default payment method
+                        buttonVisible : false,
+
+                        payment_amount : 0,
+                        current_type : '',
+
+                        paymentData: null,
+                        md5 : '',
+                        orderLastId : 0,
                     };
                 },
                 computed: {
-                    hasNext() {
-                      return this.visibleProducts.length < this.products.length;
-                    },
                     cart_qty() {
-                        return this.cart_list.length; // dynamically gets the number of cart
+                        return this.total_cart_count;
                     },
                     totalAmount(){
                         let total = 0;
-                        this.cart_list.forEach(item => {
-                            if(item.status === true) {
-                                let subTotal = parseFloat(item.qty) * parseFloat(item.price)
-                                total += subTotal
+                        let totalPlusShip = 0;
+                        const shippingFee = 0.010;
+
+                        this.total_cart_number.forEach(item => {
+                            if (item.status === true) {
+                                let subTotal = (parseFloat(item.qty) || 0) * (parseFloat(item.price) || 0);
+                                total += subTotal;
                             }
-                        })
+                        });
+
+                        totalPlusShip = total + shippingFee;
 
                         return {
-                            'total' : total,
-                            'total_usd' : total.toLocaleString(),
-                            'total_kh' : (Math.ceil(total * this.kh_rate / 100) * 100 ).toLocaleString()
-                        }
+                            total: total,
+                            total_usd: total.toLocaleString(),
+                            total_kh: (Math.ceil(total * this.kh_rate / 100) * 100).toLocaleString(),
+                            totalPlusShip: totalPlusShip,
+                            {#totalPlusShip_usd: totalPlusShip.toLocaleString(),#}
+                            {#totalPlusShip_kh: (Math.ceil(totalPlusShip * this.kh_rate / 100) * 100).toLocaleString(),#}
+                            totalPlusShip_usd:  totalPlusShip.toFixed(2) ,
+                            totalPlusShip_kh: (Math.ceil(totalPlusShip * this.kh_rate / 100) * 100) ,
+                            shipping: shippingFee
+                        };
+
                     },
                     selectedProduct(){
                         let selected = false
@@ -688,20 +506,66 @@
                             return item.status === true
                         })
 
-                        console.log(selected)
+                        console.log("helo",selected)
+                    },
+                    statusCart(){
+                        this.buttonVisible = this.total_cart_number.some(item => item.status === true);
+
+                        return  this.buttonVisible
+                    },
+                    getSelectedCartItems(){
+                        return this.total_cart_number
+                            .filter(item => item.status === true) // keep only items where status is true
+                                .map(item => ({
+                                    id : item.id,
+                                    qty: item.qty,
+                                    price: item.price,
+                                    name: item.name,
+                                    image : item.image,
+                                    p_id : item.product_id
+                            }));
                     }
                 },
                 methods: {
-                    loadMore() {
-                        const start = (this.currentPage - 1) * this.perPage;
-                        const end = start + this.perPage;
-                        this.visibleProducts = this.visibleProducts.concat(this.products.slice(start, end));
-                        this.currentPage++;
+                    fetchProducts() {
+                        // Construct the URL dynamically
+                        let protocol = window.location.protocol;
+                        let port = window.location.port;
+                        let hostname = window.location.hostname;
+                        let url = `${protocol}//${hostname}:${port}/fetchproducts`;
+
+                        // Perform the fetch request
+                        fetch('/fetchproducts')
+                            .then(res => {
+                                // Check if the response is successful
+                                if (!res.ok) {
+                                    throw new Error(`Failed to fetch products: ${res.statusText}`);
+                                }
+                                return res.json();
+                            })
+                            .then(data => {
+                                // Check if the data is an array before attempting to use it
+                                if (Array.isArray(data)) {
+                                    if (data.length === 0) {
+                                        console.log("No products available.");
+                                    } else {
+                                        this.Products = data;
+                                        {#console.log("Product Items : ",this.Products);#}
+                                        {#console.log(`${data.length} products fetched.`);#}
+                                    }
+                                } else {
+                                    console.error("Fetched data is not an array", data);
+                                }
+                            })
+                            .catch(error => {
+                                // Handle error and reset loading state
+                                console.error("Error fetching products:", error);
+                            });
                     },
                     addToCart(product) {
 
                         let find_index = this.cart_list.findIndex(obj => {
-                            return obj.id === product.id
+                            return obj.product_id === product.id
                         })
 
                         if( find_index > -1) {
@@ -709,18 +573,46 @@
                         }
                         else {
                             let cart_product = {
-                                'status' : false,
-                                'id' : product.id,
-                                'name' : product.name,
-                                'price' : product.price,
-                                'qty' : 1,
-                                'image' : product.image
+                                status : false,
+                                name : product.name,
+                                price : product.price,
+                                qty : 1,
+                                image : product.image,
+                                product_id : product.id
                             }
 
                             this.cart_list.push(cart_product)
                         }
 
-                        localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+                        // localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+
+                        // Fetch the data when the component is mounted
+                        let protocol = window.location.protocol;
+                        let port = window.location.port;
+                        let hostname = window.location.hostname;
+                        let url = `${protocol}//${hostname}:${port}/addtocart/`;
+
+                       // Send the updated cart list to the backend
+                        fetch('/addtocart/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(this.cart_list) // Send cart data as JSON
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json(); // Parse the JSON response
+                        })
+                        .then(data => {
+                            console.log('Cart data successfully sent to backend:', data);
+                            this.cart_count();
+                        })
+                        .catch(error => {
+                            console.error('There was an error with the fetch operation:', error);
+                        });
 
                         Swal.fire({
                           position: "center",
@@ -730,36 +622,135 @@
                           timer: 1000
                         });
 
-                        console.log(this.cart_list);
+                        this.cart_list = [];
                     },
-                    subQty(id){
-                        let find_index = this.cart_list.findIndex(obj => {
-                            return obj.id === id
-                        })
+                    cart_count(){
+                        let protocol = window.location.protocol;
+                        let port = window.location.port;
+                        let hostname = window.location.hostname;
+                        let url = `${protocol}//${hostname}:${port}/cartcount`;
 
-                        if( find_index > -1) {
-                            if(this.cart_list[find_index].qty > 1) {
-                                this.cart_list[find_index].qty--
+                        fetch('/cartcount')
+                            .then(res => {
+                                if (!res.ok) {
+                                    throw new Error(`Failed to fetch products: ${res.statusText}`);
+                                }
+                                return res.json();
+                            })
+                            .then(data => {
+                                this.total_cart_count = data;
+                        });
+                    },
+                    total_cart() {
+                        let protocol = window.location.protocol;
+                        let port = window.location.port;
+                        let hostname = window.location.hostname;
+                        let url = `${protocol}//${hostname}:${port}/total_cart`;
+
+                        fetch('/total_cart')
+                            .then(res => {
+                                if (!res.ok) {
+                                    throw new Error(`Failed to fetch products: ${res.statusText}`);
+                                }
+                                return res.json();
+                            })
+                            .then(data => {
+                                this.total_cart_number = data;
+                        });
+                    },
+                    delete_cart(id) {
+                        let protocol = window.location.protocol;
+                        let port = window.location.port;
+                        let hostname = window.location.hostname;
+                        let url = `${protocol}//${hostname}:${port}/cart/delete/${id}`;
+                        const csrfToken = this.getCsrfToken();
+
+                        fetch(`/cart/delete/${id}`,{
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',  // Include CSRF token in the header
+                                'X-CSRFToken': csrfToken,  // Include the CSRF token
                             }
-                        }
-
-                        localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
-                        console.log(this.cart_list)
-
-                    },
-                    addQty(id){
-                        let find_index = this.cart_list.findIndex(obj => {
-                            return obj.id === id
                         })
-
-                        if( find_index > -1) {
-                            this.cart_list[find_index].qty++
-                        }
-
-                        localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
-                        console.log(this.cart_list);
+                            .then(res => {
+                                if (!res.ok) {
+                                    throw new Error(`Failed to delete products: ${res.statusText}`);
+                                }
+                                return res.json();
+                            })
+                            .then(data => {
+                                console.log(data);
+                        });
                     },
-                    deleteCart(id){
+                    getCsrfToken() {
+                        return document.querySelector('[name=csrfmiddlewaretoken]').content;
+                    },
+                    removeCartElement(index){
+                        (this.total_cart_number.length > 1) ?
+                            this.total_cart_number.splice(index,1) :
+                             setTimeout( () => {
+                                 window.location.reload()
+                             },1500);
+                    },
+                    subQty(id,cart_qty){
+                        let protocol = window.location.protocol;
+                        let port = window.location.port;
+                        let hostname = window.location.hostname;
+                        let url = `${protocol}//${hostname}:${port}/cart/qty/sub/${id}`;
+                        console.log(id);
+                        const csrfToken = this.getCsrfToken();
+
+                        fetch(`/cart/qty/sub/${id}`,{
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrfToken,
+                            },
+                            body: JSON.stringify({ sub_qty : cart_qty }) ,
+                            credentials: 'include'
+                        }).then(
+                            res => {
+                                if (!res.ok) {
+                                    throw new Error(`Failed to update products: ${res.statusText}`);
+                                }
+                                return res.json();
+                            }
+                        ).then(data => {
+                            const item = this.total_cart_number.find(c => c.id === id);
+                            if(item) item.qty = data.qty;
+                            console.log(data);
+                        });
+
+                    },
+                    addQty(id,cart_qty){
+                        let protocol = window.location.protocol;
+                        let port = window.location.port;
+                        let hostname = window.location.hostname;
+                        let url = `${protocol}//${hostname}:${port}/cart/qty/add/${id}`;
+                        console.log(id);
+                        const csrfToken = this.getCsrfToken();
+
+                        fetch(`/cart/qty/add/${id}`,{
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrfToken,  // Include the CSRF token in the header
+                            },
+                            body: JSON.stringify({ add_qty : cart_qty })  // Send data in the request body
+                        }).then(
+                            res => {
+                                if (!res.ok) {
+                                    throw new Error(`Failed to update products: ${res.statusText}`);
+                                }
+                                return res.json();
+                            }
+                        ).then(data => {
+                            const item = this.total_cart_number.find(c => c.id === id);
+                            if(item) item.qty = data.qty;
+                            console.log(data);
+                        });
+                    },
+                    deleteCart(id,index){
                         Swal.fire({
                           title: "Are you sure?",
                           text: "You won't be able to revert this!",
@@ -776,31 +767,65 @@
                               icon: "success",
                                 timer:1500
                             });
-                            let find_index = this.cart_list.findIndex(obj => {
-                                return obj.id === id
-                            })
-
-                            if (find_index > -1){
-                                this.cart_list.splice(find_index,1)
-                            }
-
-                            console.log(find_index)
-                            localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
+                            this.delete_cart(id);
+                            this.removeCartElement(index);
                           }
                         });
 
                     },
-                    checkedCart(id){
-                        let find_index = this.cart_list.findIndex(obj => {
-                            return obj.id === id
-                        })
+                    checkedCart(id,cart_status){
+                        let protocol = window.location.protocol;
+                        let port = window.location.port;
+                        let hostname = window.location.hostname;
+                        let url = `${protocol}//${hostname}:${port}/cart/status/${id}`;
+                        const csrfToken = this.getCsrfToken();
 
-                        if(find_index > -1) {
-                            this.cart_list[find_index].status = this.cart_list[find_index].status !== true;
-                        }
+                        fetch(`/cart/status/${id}`,{
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                {#'X-CSRFToken': csrfToken,   #}
+                            },
+                            body: JSON.stringify({ status: cart_status })
+                        }).then(
+                            res => {
+                                if (!res.ok) {
+                                    throw new Error(`Failed to update products: ${res.statusText}`);
+                                }
+                                return res.json();
+                            }
+                        ).then(data => {
+                            let item = this.total_cart_number.find(c => c.id === id)
+                            item.status = data.status
 
-                        localStorage.setItem('cart_list',JSON.stringify(this.cart_list))
-                        console.log(this.cart_list[find_index].status)
+                            let cart_id = new Set(JSON.parse(localStorage.getItem('cart_id')) || []);
+
+                            for (let item of this.total_cart_number) {
+                                if (item.status === true) {
+                                    cart_id.add(item.id);
+                                }else {
+                                    cart_id.delete(item.id);   // ✅ remove ID
+                                }
+                            }
+
+                            localStorage.setItem('cart_id', JSON.stringify([...cart_id]));
+
+
+                            console.log("cart status",data);
+                        });
+
+
+                        {# use in local storage#}
+                        {#let find_index = this.cart_list.findIndex(obj => {#}
+                        {#    return obj.id === id#}
+
+                        {##}
+                        {#if(find_index > -1) {#}
+                        {#    this.cart_list[find_index].status = this.cart_list[find_index].status !== true;#}
+
+                        {##}
+                        {#localStorage.setItem('cart_list',JSON.stringify(this.cart_list))#}
+                        {#console.log(this.cart_list[find_index].status)#}
                     },
                     product_detail(product) {
                         this.productDetail = product
@@ -813,27 +838,177 @@
                         this.image = this.productDetail.image
                         this.price = this.productDetail.price
                         this.discount_price = this.productDetail.discount_price
-
-
                     },
                     test(){
                         this.addToCart(this.productDetail)
+                    },
+
+                    cart_detail(){
+                        fetch('/cart/cart_detail')
+                            .then(res => {
+                                if (!res.ok) {
+                                    throw new Error('Error = ' + res);
+                                }
+                                return res.json();
+                            }).then(data => {
+                                this.cart_list = data.filter(item => item.status === true).map(item => item.id);
+                                {#console.log('cart detail = ',this.cart_list)#}
+                            });
+                    },
+                    order_detail(){
+                        fetch('/cart/order_detail')
+                            .then(res => {
+                                if (!res.ok) {
+                                    throw new Error('Error = ' + res);
+                                }
+                                return res.json();
+                            }).then(data => {
+                                this.cart_list_detail = data.map(item => item.id);
+                                {#console.log(this.cart_list_detail)#}
+                            });
+                    },
+                    qr_generate(){
+                        let total_payment = (this.currencyType === 'USD') ? this.totalAmount.totalPlusShip_usd : this.totalAmount.totalPlusShip_kh;
+
+                        fetch('/qr_generate/',{
+                            method : 'POST',
+                            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': this.getCsrfToken() },
+                            body : JSON.stringify({
+                                total_payment : total_payment,
+                                currency_type : this.currencyType
+                            })
+                        })
+                        .then(async res => {
+                            if (!res.ok) {
+                                // backend returned HTML error page
+                                const html = await res.text();
+                                console.error("Backend error:", html);
+                                throw new Error("Django 500 error");
+                            }
+
+                            return res.json(); // safe to parse
+                        })
+                        .then(data => {
+                            console.log("Success:", data);
+
+                            window.location.href = data.redirect;
+                        })
+                        .catch(err => console.error("Error:", err));
+                    },
+                    add_cart_checkout(){
+                        const csrfToken = this.getCsrfToken();
+
+                        fetch('/add_cart_checkout/',{
+                            method : 'POST',
+                            headers : {
+                                'Content-Type' : 'application/json',
+                                'X-CSRFToken': csrfToken,  // Include the CSRF token
+                            },
+                            body : JSON.stringify({
+                                'checkout' : this.getSelectedCartItems
+                            })
+                        }).then( res => {
+                            if(!res.ok){
+                                throw new Error('Error');
+                            }
+                            return res.json();
+                        }).then(data => {
+                            console.log(data);
+                            window.location.href = '/checkout';
+                        });
+                    },
+                    add_customer_info(){
+                        const  csrfToken = this.getCsrfToken();
+                        let total_amount_usd = this.totalAmount.totalPlusShip_usd;
+                        let total_amount_khr = this.totalAmount.totalPlusShip_kh;
+
+                        fetch('/add_customer_info/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrfToken,
+                            },
+                            body: JSON.stringify({
+                                'phoneNumber': this.phoneNumber,
+                                'email': this.email,
+                                'fullName': this.fullName,
+                                'address': this.address,
+                                'totalAmount': this.currencyType === 'USD' ?  total_amount_usd : total_amount_khr,
+                                'currencyType': this.currencyType,
+                                'cart' : this.cart_list,
+                                'cartDetail' : this.cart_list_detail,
+                            })
+                        }).then(res => {
+                            if (!res.ok) {
+                                throw new Error('Error = ' + res);
+                            }
+                            return res.json();
+                        }).then(data => {
+                            if (data.error) throw new Error(data.error);
+
+                            this.orderId();
+                            this.qr_generate();
+                        });
+                    },
+
+                    orderId(){
+                        fetch('/orderId').then(res => {
+                            if (!res.ok) {
+                                throw new Error('Error = ' + res);
+                            }
+                            return res.json();
+                        }).then(data => {
+                            console.log(data);
+                            this.orderLastId = data.id;
+
+                            console.log('last id = ',this.orderLastId);
+
+                            localStorage.setItem('order_id',this.orderLastId);
+                        })
                     }
+
+
                 },
                 mounted() {
-                    fetch("{% static 'data/product.json' %}")
-                        .then(res => res.json())
-                        .then(data => {
-                            this.products = data;
-                            this.loadMore(); // load first 10
+                    this.fetchProducts();
+                    this.cart_count();
+                    this.total_cart();
+                    this.cart_detail();
+                    this.order_detail();
+
+                    // Start of Initialize Swiper
+                    const progressCircle = document.querySelector(".autoplay-progress svg");
+                    const progressContent = document.querySelector(".autoplay-progress span");
+
+                    var swiper = new Swiper(".mySwiper", {
+                        spaceBetween: 30,
+                        centeredSlides: true,
+                        loop:true,
+                        autoplay: {
+                            delay: 2500,
+                            disableOnInteraction: false
+                        },
+                        pagination: {
+                            el: ".swiper-pagination",
+                            clickable: true
+                        },
+                        navigation: {
+                            nextEl: ".swiper-button-next",
+                            prevEl: ".swiper-button-prev"
+                        },
+                        on: {
+                            autoplayTimeLeft(s, time, progress) {
+                                progressCircle.style.setProperty("--progress", 1 - progress);
+                                progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+                            }
+                        }
                     });
+                    // End of Initialize Swiper
                 }
             };
 
         createApp(App).mount('#app');
     </script>
     <!-- end of vue js -->
-
-
 </body>
 </html>

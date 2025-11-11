@@ -9,12 +9,12 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -23,9 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-15j%ygb##(_+ps38g#ltblzz&d)(ejsthz#rk=$z!14=2^nd6='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DEBUG = False
+ALLOWED_HOSTS = [
+    '*'
+]
+# ALLOWED_HOSTS = ["shopiers.top", "www.shopiers.top"]
 
+load_dotenv('.env')
 
 # Application definition
 
@@ -36,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Home'
+    'Home',
+    'Core',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +53,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://www.localhost:3000",
+]
+
+ 
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'EcommerceMidterm.urls'
 
@@ -69,17 +86,95 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'EcommerceMidterm.wsgi.application'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ecommerce',
+        'USER': 'root',
+        'PASSWORD': 'example',
+        'HOST': 'db',
+        'PORT': '3306',
+    }
+}
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# online database in railway
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'railway',
+#         'USER': 'root',
+#         'PASSWORD': 'YViAHIDkxBMNJYPKPybLwfYXIfSwjKrr',
+#         'HOST': 'interchange.proxy.rlwy.net',
+#         'PORT': '43733',
+#     }
+# }
 
+# http://127.0.0.1:9000
+# interchange.proxy.rlwy.net:43733
+
+# settings.py
+
+
+
+# ALLOWED_HOSTS = ["*"]  # change to specific hostnames in production
+
+
+
+
+
+# Database
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": os.getenv("MYSQL_DATABASE", "django_db"),
+#         "USER": os.getenv("MYSQL_USER", "django_user"),
+#         "PASSWORD": os.getenv("MYSQL_PASSWORD", "django_pass"),
+#         "HOST": os.getenv("MYSQL_HOST", "mysql"),
+#         "PORT": os.getenv("MYSQL_PORT", "3306"),
+#         "OPTIONS": {"charset": "utf8mb4"},
+#     }
+# }
+
+# Security (examples — tune for real production)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# Set SESSION_COOKIE_SECURE, CSRF_COOKIE_SECURE, etc. when using HTTPS
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'railway',
+#         'USER': 'root',
+#         'PASSWORD': 'YViAHIDkxBMNJYPKPybLwfYXIfSwjKrr',
+#         'HOST': 'interchange.proxy.rlwy.net',
+#         'PORT': '43733',
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'EcommerceForFinal',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'mengsonly09@gmail.com'
+# EMAIL_HOST_PASSWORD = 'nnjswizejlndwzml'
+EMAIL_HOST_USER = 'mengsonly5555@gmail.com'
+EMAIL_HOST_PASSWORD = 'aufzncygekaltudo'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -115,9 +210,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+

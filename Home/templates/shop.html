@@ -9,52 +9,51 @@
     <div class="container-fluid py-5">
         <div class="container">
             <div class="row gy-4">
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12"  v-for="product in visibleProducts" :key="product.id">
-                    <div class="">
-                        <div class="product-card p-3">
-                            <div class="position-relative">
-                            <img v-bind:src="product.image" :alt="[[ product.name ]]" class="product-img" style="height:320px;width: 274px;object-fit: cover">
+                <!-- Loop through the products array -->
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12" v-for="product in Products" :key="product.id">
+                    <div class="product-card p-3">
+                        <div class="position-relative">
+                            <!-- Product image -->
+
+                            <img :src="`static/image/clothes/${product.image}`" :alt="product.name" class="product-img" style="height:320px;width: 274px;object-fit: cover">
                             <span class="discount-badge">39% OFF</span>
-                          </div>
-                            <div class="p-3">
-                                <h6 class="mb-2"  >[[ product.name ]]</h6>
-                                <section class="d-flex justify-content-between align-items-center p-0">
-                                <div class="d-flex align-items-center ">
-                                  <span class="price" >$[[ product.price ]]</span>
-                                  <span class="old-price"  >$[[ product.discount_price ]]</span>
+                        </div>
+                        <div class="p-3">
+                            <!-- Product name -->
+                            <h6 class="mb-2">[[ product.name ]]</h6>
+                            <section class="d-flex justify-content-between align-items-center p-0">
+                                <!-- Product price and discount price -->
+                                <div class="d-flex align-items-center">
+                                    <span class="price">$[[ product.price ]]</span>
+                                    <span class="old-price">$[[ product.discount_price ]]</span>
                                 </div>
-                                <div class="d-flex align-items-center ">
-                                  <div class="rating" style="font-size:9px;">
-                                  </div>
-                                  <span class="rating-badge"  style="font-size:10px;">[[ product.rate ]]</span>
+                                <!-- Product rating -->
+                                <div class="d-flex align-items-center">
+                                    <div class="rating" style="font-size:9px;">
+                                        <!-- Example rating (add stars or other rating system) -->
+                                        <span class="fa fa-star" v-for="i in Math.floor(product.rate)" :key="i"></span>
+                                    </div>
+                                    <span class="rating-badge" style="font-size:10px;">[[ product.rate ]]</span>
                                 </div>
-                             </section>
-                                <div class="d-flex justify-content-between">
-                                    <button class="btn btn-cart"
-                                            @click="addToCart(product)"
-                                    >
-                                        <i class="fas fa-shopping-cart me-2"></i> Add to cart
-                                    </button>
-{#                                    <a href=""#}
-{#                                       type="button"#}
-{#                                       @click="product_detail(product)"#}
-{#                                       class="btn btn-outline-success">#}
-{#                                        Detail#}
-{#                                    </a>#}
-                                    <button
-                                            type="button" class="btn btn-outline-success"
-                                            @click="product_detail(product)"
-                                             data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                    >
-                                        Detail
-                                    </button>
-                                </div>
+                            </section>
+                            <div class="d-flex justify-content-between">
+                                <!-- Add to Cart Button -->
+                                <button class="btn btn-cart" @click="addToCart(product)">
+                                    <i class="fas fa-shopping-cart me-2"></i> Add to cart
+                                </button>
+
+                                <!-- Product Details Button (opens modal) -->
+                                <button type="button" class="btn btn-outline-success" @click="product_detail(product)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    Detail
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
 
 
         <!-- Modal -->
@@ -69,7 +68,7 @@
                   <div class="row">
                         <!-- Product Image -->
                         <div class="col-lg-6">
-                            <img :src="image"
+                            <img :src="`static/image/clothes/${image}`"
                                  :alt="title" class="product-img rounded shadow-sm" style="width:100%;object-fit: cover">
                         </div>
 
@@ -109,12 +108,12 @@
         </div>
 
         {#    load new product    #}
-        <div class="container mt-5">
-            <button v-if="hasNext" @click="loadMore" class="btn btn-primary ms-2">
-                <i class="fa-solid fa-shirt"></i>
-                <span class="ms-2">Load More Product</span>
-            </button>
-        </div>
+{#        <div class="container mt-5">#}
+{#            <button v-if="hasNext" @click="loadMore" class="btn btn-primary ms-2">#}
+{#                <i class="fa-solid fa-shirt"></i>#}
+{#                <span class="ms-2">Load More Product</span>#}
+{#            </button>#}
+{#        </div>#}
 
     </div>
 

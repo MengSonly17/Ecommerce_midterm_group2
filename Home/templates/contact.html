@@ -6,13 +6,12 @@
 
 {% block content %}
 
+    {{ context }}
+
     <div class="container-fluid ">
         <div class="container my-5 p-4">
 
             <div class="row">
-                <div class="col-12 mb-5">
-                    <h2 class="title text-center fw-semibold text-uppercase">Contact Us </h2>
-                </div>
                 <div class="col-12">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7074.552166642912!2d104.88888525077547!3d11.564950643993583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31095173761d4a53%3A0xcd09ff2f4d326e3f!2sSETEC%20Institute!5e1!3m2!1sen!2skh!4v1756263873359!5m2!1sen!2skh" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
@@ -22,51 +21,81 @@
 
             <div class="row">
 
-                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                    <div class="box">
-                        <!-- Contact Info -->
-                        <h2 class="mb-3">📱Contact Us</h2>
-                        <p>If you have any questions, feel free to reach out to us.</p>
-                        <ul class="list-unstyled">
-                          <li class="mb-2"><strong>Email:</strong> mengsonly@myshop.com</li>
-                          <li class="mb-2"><strong>Phone:</strong> +855 10 94 77 90</li>
-                          <li ><strong>Address:</strong> No. 86A, Street 110, Russian Federation Blvd (110), Phnom Penh Street 123, Phnom Penh, Cambodia</li>
+                <div class="col-xl-5 col-lg-5 col-md-5 col-12">
+                    <div class="boxes">
+                        <h2 class="mb-4">📱 Contact Us</h2>
+                        <p class="mb-4">If you have any questions, feel free to reach out to us.</p>
+
+                        <ul class="contact-details list-unstyled">
+                            <li class="mb-3">
+                                <strong>Email:</strong>
+                                <div>mengsonly@myshop.com</div>
+                            </li>
+                            <li class="mb-3">
+                                <strong>Phone:</strong>
+                                <div>+855 10 94 77 90</div>
+                            </li>
+                            <li class="mb-3">
+                                <strong>Address:</strong>
+                                <div>No. 86A, Street 110, Russian Federation Blvd (110), Phnom Penh Street 123, Phnom Penh, Cambodia</div>
+                            </li>
                         </ul>
-                        <p>We're available Monday to Saturday, 8AM – 6PM.</p>
+
+                        <div class="hours">
+                            <p class="mb-0">We're available Monday to Saturday, 8AM – 6PM.</p>
+                        </div>
+
+                        <div class="map-placeholder">
+                            📍 Interactive Map Location
+
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-xl-8 col-lg-8 col-md-8 col-12">
-                    <div class="box">
-                        <div class="contact-form">
-                            <h2 class="title mb-4">Get In Touch</h2>
-                            <div class="status alert alert-success" style="display: none"></div>
-                                <form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
-                                    <div class="row m-0 p-0 mb-3">
-                                        <div class="col-6">
-                                            <input type="text" class="form-control" placeholder="First name" aria-label="First name">
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                                    </div>
-                                    <div class="form-group col-12 mb-4">
-                                        <textarea name="message" id="message" required="required" class="form-control" rows="8" cols="4" placeholder="Your Message Here"></textarea>
-                                    </div>
-                                    <div class="form-group col-12">
-                                        <input type="submit" name="submit" class="btn btn-outline-success pull-right" value="Submit">
-                                    </div>
-                                </form>
+                <div class="col-xl-7 col-lg-7 col-md-7 col-12">
+                    <form id="contactForm" class="boxes">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName" class="required">First Name</label>
+                                    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+                                    <div class="error-message" id="firstNameError">Please enter your first name</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName" class="required">Last Name</label>
+                                    <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+                                    <div class="error-message" id="lastNameError">Please enter your last name</div>
+                                </div>
                             </div>
-                    </div>
+
+                            <div class="form-group">
+                                <label for="email" class="required">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                                <div class="error-message" id="emailError">Please enter a valid email address</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                                <div class="error-message" id="phoneError">Please enter a valid phone number</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message" class="required">Message</label>
+                                <textarea id="message" name="message" placeholder="Enter your message here..." required></textarea>
+                                <div class="error-message" id="messageError">Please enter your message</div>
+                            </div>
+
+                            <button type="submit" class="submit-btn" onclick="sendEmail()">Send Message</button>
+                        </form>
                 </div>
             </div>
 
+
         </div>
     </div>
+
+
 
 
 {% endblock %}

@@ -5,7 +5,7 @@
     "description": "A timeless and comfortable t-shirt made from 100% premium cotton. Perfect for everyday wear.",
     "price": 25.99,
     "category": "T-Shirts",
-    "image": "https://www.frenchconnection.com/cdn/shop/files/LEAD_569ZE10_600copy.jpg?v=1716301996",
+    "image": "LEAD_569ZE10_600copy.webp",
     "rate": 3.7,
     "discount_price": 20.79
   },
@@ -15,7 +15,7 @@
     "description": "Modern and stylish slim-fit jeans crafted from high-quality denim. A versatile addition to any wardrobe.",
     "price": 89.99,
     "category": "Jeans",
-    "image": "https://cdn.thewirecutter.com/wp-content/media/2024/12/BEST-MENS-JEANS-2048px-9811.jpg?auto=webp&quality=75&width=1024",
+    "image": "BEST-MENS-JEANS-2048px-9811.webp",
     "rate": 4.1,
     "discount_price": 71.99
   },
@@ -25,7 +25,7 @@
     "description": "Stay warm and fashionable with this cozy sweater made from a soft wool blend. Ideal for chilly days.",
     "price": 59.99,
     "category": "Sweaters",
-    "image": "https://api.cooshwear.com/assets/coosh9-222186-min__preview.jpg?w=1200&q=95",
+    "image": "coosh9-222186-min__preview.jpg",
     "rate": 3.9,
     "discount_price": 47.99
   },
@@ -35,7 +35,7 @@
     "description": "A classic biker jacket made from genuine leather. Adds a touch of edge to any outfit.",
     "price": 199.99,
     "category": "Jackets",
-    "image": "https://barneysoriginals.com/wp-content/uploads/2019/01/WEASLEY-BLCK-0047h-scaled.jpg",
+    "image": "WEASLEY-BLCK-0047h-scaled.jpg",
     "rate": 4.6,
     "discount_price": 159.99
   },
@@ -45,7 +45,7 @@
     "description": "A lightweight and breathable linen shirt, perfect for a relaxed and casual look.",
     "price": 45.99,
     "category": "Shirts",
-    "image": "https://themillionbucks.com/cdn/shop/files/untitled-session3537.jpg?v=1698310549",
+    "image": "untitled-session3537.webp",
     "rate": 4.6,
     "discount_price": 36.79
   },
@@ -55,7 +55,7 @@
     "description": "Versatile and stylish chino pants that can be dressed up or down for any occasion.",
     "price": 65.0,
     "category": "Pants",
-    "image": "https://d3aefbmawe1c9c.cloudfront.net/wp-content/uploads/2022/04/chino-page-man-wearing-light-khaki-chino-steps-down-the-stairs-3-e1649749357223-975x1300.jpg",
+    "image": "chino-page-man-wearing-light-khaki-chino-steps-down-the-stairs-3-e1649749357223-975x1300.jpg",
     "rate": 3.1,
     "discount_price": 52.0
   },
@@ -65,7 +65,7 @@
     "description": "A comfortable and stylish hoodie with a unique graphic print. Perfect for a streetwear look.",
     "price": 55.5,
     "category": "Hoodies",
-    "image": "https://veirdo.in/cdn/shop/files/Hustle_1.jpg?v=1754543017&width=533",
+    "image": "Hustle_1.webp",
     "rate": 4.7,
     "discount_price": 44.4
   },
@@ -75,7 +75,7 @@
     "description": "A crisp and elegant dress shirt, perfect for formal events and business meetings.",
     "price": 75.0,
     "category": "Shirts",
-    "image": "https://dtcralphlauren.scene7.com/is/image/PoloGSI/s7-1390091_alternate4?$plpDeskRF$",
+    "image": "s7-1390091_alternate4.avif",
     "rate": 4.2,
     "discount_price": 60.0
   },
@@ -85,7 +85,7 @@
     "description": "Comfortable and practical cargo shorts with multiple pockets. Ideal for outdoor activities.",
     "price": 35.99,
     "category": "Shorts",
-    "image": "https://au.motelrocks.com/cdn/shop/files/ROXE-TOP-BLACK-SATIO-CARGO-SHORT-STONE-208629.jpg?crop=center&height=2428&v=1718958236&width=1920",
+    "image": "1098935.jpg",
     "rate": 3.8,
     "discount_price": 28.79
   },
@@ -165,7 +165,7 @@
     "description": "Comfortable and stylish jogger pants.",
     "price": 55.0,
     "category": "Pants",
-    "image": "https://hips.hearstapps.com/hmg-prod/images/mhl-joggers-rhone-731-67a515b17517b.jpg?crop=0.500xw:1.00xh;0.258xw,0&resize=1120:*",
+    "image": "https://bornprimitive.com/cdn/shop/files/MERGED_0073_Layer130.jpg?v=1696513894",
     "rate": 4.8,
     "discount_price": 44.0
   },
@@ -173,11 +173,11 @@
     "id": 18,
     "name": "Crewneck T-Shirt",
     "description": "A basic and versatile crewneck t-shirt.",
-    "price": 19.99,
+    "price": 12.99,
     "category": "T-Shirts",
-    "image": "https://media.boohoo.com/i/boohoo/amm14077_white_xl/male-white-basic-oversized-crew-neck-t-shirt/?w=900&qlt=default&fmt.jp2.qlt=70&fmt=auto&sm=fit",
+    "image": "https://bornprimitive.com/cdn/shop/files/MERGED_0073_Layer130.jpg?v=1696513894",
     "rate": 4.0,
-    "discount_price": 15.99
+    "discount_price": 19.99
   },
   {
     "id": 19,
