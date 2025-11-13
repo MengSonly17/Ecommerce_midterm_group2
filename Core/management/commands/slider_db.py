@@ -22,7 +22,7 @@ class Command(BaseCommand):
                 'year': 2025,
                 'description': 'lorem sfsfj sfsfjsafk afksajf asfj sajf sjkfjsf',
                 'image': 'image/slider/2-Photoroom.png',
-                'status' : 'inactive',
+                'status' : 'active',
             },
         ]
         for s in slider:

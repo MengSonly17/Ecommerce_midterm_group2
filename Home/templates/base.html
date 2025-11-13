@@ -399,8 +399,6 @@
         </div>
     </div>
 
-
-
     {% if title == 'Contact' %}
         <script src="{% static 'js/sendEmail.js' %}" ></script>
     {% endif %}
@@ -950,24 +948,6 @@
                             this.qr_generate();
                         });
                     },
-
-                    orderId(){
-                        fetch('/orderId').then(res => {
-                            if (!res.ok) {
-                                throw new Error('Error = ' + res);
-                            }
-                            return res.json();
-                        }).then(data => {
-                            console.log(data);
-                            this.orderLastId = data.id;
-
-                            console.log('last id = ',this.orderLastId);
-
-                            localStorage.setItem('order_id',this.orderLastId);
-                        })
-                    }
-
-
                 },
                 mounted() {
                     this.fetchProducts();
@@ -1006,7 +986,6 @@
                     // End of Initialize Swiper
                 }
             };
-
         createApp(App).mount('#app');
     </script>
     <!-- end of vue js -->

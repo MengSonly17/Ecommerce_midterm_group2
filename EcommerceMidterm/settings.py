@@ -23,10 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-15j%ygb##(_+ps38g#ltblzz&d)(ejsthz#rk=$z!14=2^nd6='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-ALLOWED_HOSTS = [
-    '*'
-]
+DEBUG = True
+ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ["shopiers.top", "www.shopiers.top"]
 
 load_dotenv('.env')
@@ -62,8 +60,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://www.localhost:3000",
 ]
 
- 
-
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'EcommerceMidterm.urls'
@@ -85,46 +81,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'EcommerceMidterm.wsgi.application'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce',
-        'USER': 'root',
-        'PASSWORD': 'example',
-        'HOST': 'db',
-        'PORT': '3306',
-    }
-}
-
-
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-# online database in railway
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'railway',
-#         'USER': 'root',
-#         'PASSWORD': 'YViAHIDkxBMNJYPKPybLwfYXIfSwjKrr',
-#         'HOST': 'interchange.proxy.rlwy.net',
-#         'PORT': '43733',
-#     }
-# }
-
-# http://127.0.0.1:9000
-# interchange.proxy.rlwy.net:43733
-
-# settings.py
-
-
-
-# ALLOWED_HOSTS = ["*"]  # change to specific hostnames in production
-
-
-
 
 
 # Database
@@ -159,7 +115,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'EcommerceForFinal',
+#         'NAME': 'ecommerceforfinal',
 #         'USER': 'root',
 #         'PASSWORD': '',
 #         'HOST': 'localhost',
@@ -167,12 +123,21 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 #     }
 # }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'djangoDB',
+        'USER': 'postgres',
+        'PASSWORD': '12345',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'mengsonly09@gmail.com'
-# EMAIL_HOST_PASSWORD = 'nnjswizejlndwzml'
 EMAIL_HOST_USER = 'mengsonly5555@gmail.com'
 EMAIL_HOST_PASSWORD = 'aufzncygekaltudo'
 
@@ -206,15 +171,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 # Default primary key field type

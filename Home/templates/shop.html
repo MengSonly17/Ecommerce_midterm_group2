@@ -5,7 +5,6 @@
 {% block title %} Shopping {% endblock %}
 
 {% block content %}
-
     <div class="container-fluid py-5">
         <div class="container">
             <div class="row gy-4">
@@ -54,10 +53,8 @@
         </div>
     </div>
 
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
               <div class="modal-header">
@@ -105,17 +102,5 @@
               </div>
             </div>
           </div>
-        </div>
-
-        {#    load new product    #}
-{#        <div class="container mt-5">#}
-{#            <button v-if="hasNext" @click="loadMore" class="btn btn-primary ms-2">#}
-{#                <i class="fa-solid fa-shirt"></i>#}
-{#                <span class="ms-2">Load More Product</span>#}
-{#            </button>#}
-{#        </div>#}
-
     </div>
-
-
 {% endblock %}

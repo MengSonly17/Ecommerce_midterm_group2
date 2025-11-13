@@ -60,9 +60,8 @@
                 { md5: md5 },
                 { headers: {"X-CSRFToken": csrfToken} }
             ).then(res => {
-                {#console.log('data = ',res.data.data);#}
                 if (res.data.data == null) {
-                    console.log('Scan lerng...');
+                    console.log('Scan ...');
                 } else {
                     clearInterval(setTimer);
 
@@ -158,16 +157,10 @@
             }).then(data => {
                 console.log(data);
             }).catch(error => {
-                // Handle any errors that occur during the request
                 console.error('Error:', error.response ? error.response.data : error.message);
             });
 
         }
-
-
-
-
-
     </script>
 </body>
 </html>
