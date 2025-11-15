@@ -661,7 +661,7 @@ def payment_success(request):
             )
 
             # delete cart items
-            # Cart.objects.filter(id__in=cart_ids).delete()
+            Cart.objects.filter(id__in=cart_ids).delete()
             # Cart.objects.filter(id__in=cart_ids).update(disabled=True)
 
             order_item = Order.objects.filter(id=order_id).first()

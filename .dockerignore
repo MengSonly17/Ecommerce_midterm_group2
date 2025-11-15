@@ -3,17 +3,11 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Ignore virtual environments
-.venv/
-env/
-venv/
-
 # Ignore Git files
 .git
 .gitignore
 
 # Ignore local settings and environment files
-.env
 *.sqlite3
 *.log
 
