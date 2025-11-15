@@ -1,33 +1,7 @@
-import os
-import shutil
-import time
-import uuid
-from http.client import responses
-from itertools import product
-from json import JSONDecodeError
-from locale import currency
-from pathlib import Path
-from urllib.parse import quote_plus
-
-from django.core import serializers
-from django.http import BadHeaderError, HttpResponseRedirect, HttpResponse, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
-import requests
-from django.templatetags.static import static
-from django.views.decorators.http import require_http_methods
-from pyexpat.errors import messages
+from django.shortcuts import render, get_object_or_404
 from tabulate import tabulate
 from .models import *
-from django.core.mail import send_mail
-from django.conf import settings
-from django.core.paginator import Paginator
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from django.views.decorators.csrf import csrf_exempt
-import json
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
 from bakong_khqr import KHQR
 import qrcode
 import os
@@ -38,12 +12,18 @@ from urllib.parse import quote_plus
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from django.conf import settings
+from dotenv import load_dotenv
+from django.shortcuts import render
+from django.core.files.base import ContentFile
+from cloudinary.uploader import upload
+from io import BytesIO
+
+load_dotenv('.env')
 
 # source link to images
 # https://res.cloudinary.com/djpt59lvm/image/upload/v1759857245/
 
-bakong_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzNhYjk1OGMxYzljNDE1YSJ9LCJpYXQiOjE3NjE0NzEwOTEsImV4cCI6MTc2OTI0NzA5MX0.gVv1mcVp1o0hNrXqe5DOodFg3LIWQUfO3kL8Ems7zL4'
-
+bakong_token=f"{os.getenv('BAKONG_TOKEN')}"
 
 def check_payment_status(request):
     if request.method != "POST":
@@ -115,13 +95,13 @@ def qr_generate(request):
 
             # Generate QR code data for a transaction:
             qr = khqr.create_qr(
-                bank_account='meng_sonly@wing',  # Check your user_name@bank under Bakong profile (Mobile App)
-                merchant_name='MENG SONLY',
-                merchant_city='Phnom Penh',
+                bank_account=f"{os.getenv('BANK_ACCOUNT')}",  # Check your user_name@bank under Bakong profile (Mobile App)
+                merchant_name=f"{os.getenv('MERCHANT_NAME')}",
+                merchant_city=f"{os.getenv('MERCHANT_CITY')}",
                 amount=total_payment,  # 9800 Riel
                 currency=currency_type,  # USD or KHR
                 store_label='LyCoding',
-                phone_number='85510947790',
+                phone_number=f"{os.getenv('PHONE_NUMBER')}",
                 bill_number='lo832748sf',
                 terminal_label='Lycod01',
                 static=False  # Static or Dynamic QR code (default: False)
@@ -132,35 +112,32 @@ def qr_generate(request):
 
             #######################################
 
-            # img = qrcode.make(qr)
-            #
-            # filename = f"{md5}.png"
-            # img.save(filename)
             # Generate the QR code image
-            img = qrcode.make(qr)
+            qr_img = qrcode.make(qr)
 
-            # Define the file path to save the image under the static/qrcodes directory
-            # static_dir = os.path.join(settings.BASE_DIR, 'Home', 'static', 'qrcodes')
-            # if not os.path.exists(static_dir):
-            #     os.makedirs(static_dir)  # Create the directory if it doesn't exist
+            # Save the QR code as an image in memory
+            img_byte_array = BytesIO()
+            qr_img.save(img_byte_array, format='PNG')
+            img_byte_array.seek(0)
 
-            # media_dir = os.path.join(settings.MEDIA_ROOT,  'media', 'qrcodes')
-            # if not os.path.exists(media_dir):
-            #     os.makedirs(media_dir)
+            # Create a file-like object for the image
+            img_file = ContentFile(img_byte_array.read())
 
-            # Save the QR code as an image file with full file path
-            filename = f"{md5}.png"
-            file_path = os.path.join(settings.MEDIA_ROOT, "qrcodes", filename)
+            # Upload to Cloudinary
+            upload_response = upload(img_file, resource_type="image")
 
-            img.save(file_path)  # Pass the full file path to save the image
+            # Get the URL of the uploaded image from Cloudinary
+            qr_image_url = upload_response.get('secure_url')
+
+            print(f"qr code = {qr_image_url}")
 
             # Save the data in session for further use
             request.session['qr_code'] = {
                 "md5": md5,
                 "total_payment": total_payment,
                 "currency_type": currency_type,
-                "merchant_name": 'MENG SONLY',
-                "filename": filename
+                "merchant_name":  os.getenv('MERCHANT_NAME'),
+                "filename": qr_image_url
             }
 
             # Send JSON response with the redirect URL to the payment page
@@ -176,10 +153,6 @@ def qr_generate(request):
             'message' : 'This method is not allow.',
 
         }, status=400)
-
-
-
-
 
 # @csrf_exempt
 # @api_view(['POST'])
@@ -313,7 +286,6 @@ def productdetails(request):
     context = {'title': 'ProductDetails'}
 
     return render(request, 'productdetail.html', context)
-
 
 #send to customer when order completed
 def email_sender(request):
@@ -546,7 +518,6 @@ def payment_checkout(request):
     except Exception as e:
         # If an error occurs, return an error message
         return JsonResponse({'error': str(e)}, status=400)
-
 
 ####### add cart to db
 
@@ -798,17 +769,6 @@ def update_disabled_cart(request):
     except Exception as e:
         print("ERROR:", str(e))   # Debug
         return JsonResponse({'error': str(e)}, status=500)
-
-
-
-
-
-
-
-
-
-
-
 
 
 

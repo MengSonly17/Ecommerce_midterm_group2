@@ -12,22 +12,24 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+load_dotenv('.env')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-15j%ygb##(_+ps38g#ltblzz&d)(ejsthz#rk=$z!14=2^nd6='
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ["shopiers.top", "www.shopiers.top"]
-
-load_dotenv('.env')
 
 # Application definition
 
@@ -55,10 +57,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://www.localhost:3000",
-]
+# CORS_ALLOWED_ORIGINS = ["shopiers.top", "www.shopiers.top"]
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -82,64 +81,49 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'EcommerceMidterm.wsgi.application'
 
-
-# Database
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.mysql",
-#         "NAME": os.getenv("MYSQL_DATABASE", "django_db"),
-#         "USER": os.getenv("MYSQL_USER", "django_user"),
-#         "PASSWORD": os.getenv("MYSQL_PASSWORD", "django_pass"),
-#         "HOST": os.getenv("MYSQL_HOST", "mysql"),
-#         "PORT": os.getenv("MYSQL_PORT", "3306"),
-#         "OPTIONS": {"charset": "utf8mb4"},
-#     }
-# }
-
 # Security (examples — tune for real production)
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # Set SESSION_COOKIE_SECURE, CSRF_COOKIE_SECURE, etc. when using HTTPS
 
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'railway',
-#         'USER': 'root',
-#         'PASSWORD': 'YViAHIDkxBMNJYPKPybLwfYXIfSwjKrr',
-#         'HOST': 'interchange.proxy.rlwy.net',
-#         'PORT': '43733',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ecommerceforfinal',
-#         'USER': 'root',
-#         'PASSWORD': '',
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'djangoDB',
+#         'USER': 'postgres',
+#         'PASSWORD': '12345',
 #         'HOST': 'localhost',
-#         'PORT': '3306',
+#         'PORT': '5432',
 #     }
 # }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'djangoDB',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
 }
 
+# email sender
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'mengsonly5555@gmail.com'
-EMAIL_HOST_PASSWORD = 'aufzncygekaltudo'
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+# Cloudinary Configuration
+cloudinary.config(
+  cloud_name = os.getenv('CLOUD_NAME'),
+  api_key = os.getenv('API_KEY'),
+  api_secret =  os.getenv('API_SECRET')
+)
+
+# Add django-cloudinary-storage
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -159,28 +143,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/vol/web/media'   # This must match your Docker volume
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATIC_ROOT = '/vol/web/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-

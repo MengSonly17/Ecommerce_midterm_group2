@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %} Check Out {% endblock %}
+{% block title %} Checkout {% endblock %}
 
 {% block content %}
     <div class="container">
@@ -96,7 +96,7 @@
                     <div class="order-item" v-for="item in getSelectedCartItems">
                         <div class="item-details">
                             <div class="item-image">
-                                <img :src="`static/image/clothes/${item.image}`" alt="" style="width:60px;height:60px;object-fit: cover;">
+                                <img :src="`https://res.cloudinary.com/djpt59lvm/image/upload/${item.image}`" alt="" style="width:60px;height:60px;object-fit: cover;">
                             </div>
                             <div>
                                 <p class="item-name m-0">[[ item.name ]]</p>

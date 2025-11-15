@@ -37,7 +37,7 @@
                         <div class="d-flex align-items-center">
                             <div style="width:80px;height:80px;object-fit:contain;margin-right: 15px">
                                 <img
-                                :src="`static/image/clothes/${item.image}`"
+                                :src="`https://res.cloudinary.com/djpt59lvm/image/upload/${item.image}`"
                                 style="object-fit: contain;width:100%;height:80px;"
                                 :alt="item.name"
                                 class="cart-item-image me-4">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="summary-item">
                         <span class="label">Delivery Fee</span>
-                        <span class="value">$ [[ 2 ]]</span>
+                        <span class="value">$ [[ totalAmount.shipping ]]</span>
                     </div>
                     <hr class="my-3">
                     <div class="summary-total">

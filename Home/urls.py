@@ -41,7 +41,7 @@ urlpatterns = [
     path('update_disabled_cart/',views.update_disabled_cart, name='update_disabled_cart'),
 
     path('telegram_sender/',views.telegram_sender,name='telegram'),
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 if settings.DEBUG:

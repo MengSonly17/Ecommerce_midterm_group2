@@ -5,8 +5,102 @@
     <meta name="csrf-token" content="{{ csrf_token }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="{% static 'css/payment.css' %}" rel="stylesheet">
+    <title>Payment</title>
+    <style>
+                * {
+            box-sizing: border-box;
+            margin:0;
+            padding:0;
+        }
+        :root {
+            --primary-color:#e01b1b;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .card {
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        .card-header  {
+            background-color: var(--primary-color);
+            text-align: center;
+            position: relative;
+            h3 {
+                padding:20px 0;
+                color: #fff;
+            }
+            .card-banner {
+                height: 25px;
+                width: 230px;
+                background-color: var(--primary-color);
+                position: absolute;
+                top: 40px;
+                right: -90px;
+                transform: rotate(45deg);
+                z-index: -1;
+            }
+        }
+        .card-body {
+            /* padding: 20px;  */
+
+            .border {
+                border:1px dashed #ccc;
+            }
+
+            .user-info {
+                padding:20px;
+
+                h4 {
+                    font-size: 15px;
+                    margin-bottom: 10px;
+                    text-transform: uppercase;
+                }
+            }
+
+            .card-img {
+                width:300px;
+                height:300px;
+                padding: 20px;
+                position: relative;
+
+                .sign {
+                    background-color: rgb(0, 0, 0);
+                    width:30px;
+                    height:30px;
+                    display: inline-block;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    border:5px solid #fff;
+                    color:white;
+                    font-weight: bolder;
+                    padding:20px;
+                    font-size: 25px;
+                    position: absolute;
+                    top:50%;
+                    left:50%;
+                    transform: translate(-50%, -50%);
+                    /*{#visibility: hidden;#}*/
+                }
+
+                img {
+                    width:100%;
+                    height:auto;
+                    object-fit: cover;
+                }
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -35,8 +129,7 @@
                     {% elif currency_type == 'KHR' %}
                     <span  class="sign">៛</span>
                     {% endif %}
-{#                     <img src="{% static 'qrcodes' %}/{{ filename }}" alt="QR Code">#}
-                        <img src="/media/qrcodes/{{ filename }}" alt="dsjfks">
+                    <img src="{{ filename }}" alt="qrcode">
                 </div>
             </div>
         </div>
@@ -47,7 +140,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
+    <script type="application/javascript">
         axios.defaults.xsrfCookieName = 'csrftoken';
         axios.defaults.xsrfHeaderName = 'X-CSRFToken';
         let  orderId = localStorage.getItem('order_id');
